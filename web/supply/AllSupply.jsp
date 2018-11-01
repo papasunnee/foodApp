@@ -1,5 +1,5 @@
 <%-- 
-    Document   : demo
+    Document   : FoodStore App
     Created on : Oct 29, 2018, 1:30:15 PM
     Author     : Funmilola
 --%>
