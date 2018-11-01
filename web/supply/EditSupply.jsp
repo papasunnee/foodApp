@@ -1,9 +1,10 @@
 <%-- 
     Document   : demo
     Created on : Oct 29, 2018, 1:30:15 PM
-    Author     : Sunday
+    Author     : Funmilola
 --%>
 
+<%@page import="bean.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 
@@ -21,6 +22,16 @@
   </head>
 
   <body>
+      <% 
+            if(null == session.getAttribute("currentSessionUser")){
+                response.sendRedirect(request.getContextPath());
+            }
+            else
+            {
+            User currentUser = (User) session.getAttribute("currentSessionUser");
+            }
+
+        %>
 
     <header>
       <!-- Fixed navbar -->

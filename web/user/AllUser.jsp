@@ -1,9 +1,10 @@
 <%-- 
     Document   : ALlUser
     Created on : Oct 28, 2018, 3:44:23 PM
-    Author     : Sunday
+    Author     : Funmilola
 --%>
 
+<%@page import="bean.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html>
@@ -13,6 +14,16 @@
         <title>JSP Page</title>
     </head>
     <body>
+        
+        <% 
+            if(session.getAttribute("currentSessionUser")){
+                response.sendRedirect("index.jsp");
+            }
+            else
+            {
+            User currentUser = (User) session.getAttribute("currentSessionUser");
+
+        %>
         <h1>User Table</h1>
         <table border="1">
             <thead>

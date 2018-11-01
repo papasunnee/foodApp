@@ -1,7 +1,7 @@
 <%-- 
     Document   : ManageAddUser
     Created on : Oct 28, 2018, 3:11:36 PM
-    Author     : Sunday
+    Author     : Funmilola
 --%>
 
 <%@page import="dao.UserDataAccess"%>

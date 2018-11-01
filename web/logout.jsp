@@ -1,7 +1,7 @@
 <%-- 
     Document   : logout
     Created on : Oct 25, 2018, 9:49:50 PM
-    Author     : Sunday
+    Author     : Funmilola
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,6 +14,7 @@
     <body onload="noBack();"
     onpageshow="if (event.persisted) noBack();" onunload="">
         <%
+            session.setAttribute("currentSessionUser", null) ;
             session.invalidate();
             response.sendRedirect("index.jsp");
             %>

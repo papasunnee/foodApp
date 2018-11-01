@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : Oct 28, 2018, 2:59:33 PM
-    Author     : Sunday
+    Author     : Funmilola
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

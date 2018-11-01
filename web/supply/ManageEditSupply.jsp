@@ -1,9 +1,10 @@
 <%-- 
     Document   : ManageEdit
     Created on : Oct 28, 2018, 12:14:49 PM
-    Author     : Sunday
+    Author     : Funmilola
 --%>
 
+<%@page import="bean.User"%>
 <%@page import="dao.SupplierDataAccess"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,6 +15,14 @@
     </head>
     <body>
         <% 
+            if(null == session.getAttribute("currentSessionUser")){
+                response.sendRedirect(request.getContextPath());
+            }
+            else
+            {
+            User currentUser = (User) session.getAttribute("currentSessionUser");
+            }
+       
             String suppliername = request.getParameter("suppliername");
             String supplierphone = request.getParameter("supplierphone");
             String supplieraddress = request.getParameter("supplieraddress");

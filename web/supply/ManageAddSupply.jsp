@@ -1,9 +1,10 @@
 <%-- 
     Document   : ManageAddFood
     Created on : Oct 28, 2018, 10:22:51 AM
-    Author     : Sunday
+    Author     : Funmilola
 --%>
 
+<%@page import="bean.User"%>
 <%@page import="dao.FoodDataAccess"%>
 <%@page import="dao.SupplyDataAccess"%>
 <%@page import="bean.Supply"%>
@@ -16,19 +17,28 @@
     </head>
     <body>
         <% 
-            int itemid = Integer.parseInt(request.getParameter("itemid"));
-            int supplierid = Integer.parseInt(request.getParameter("supplierid"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            double price = Double.parseDouble(request.getParameter("price"));
-            
-            Supply s = new Supply(0, itemid, quantity, price, supplierid) ;
-            
-            SupplyDataAccess sd = new SupplyDataAccess() ;
-            sd.addSupply(s);
-            FoodDataAccess fd = new FoodDataAccess() ;
-            fd.updateFoodQuantity(itemid , quantity, price) ;
-            String url = request.getContextPath() + "/supply/AllSupply" ;
-            response.sendRedirect(url);
+            if(null == session.getAttribute("currentSessionUser")){
+                response.sendRedirect(request.getContextPath());
+            }
+            if(request.getParameter("itemid") != null){
+                int itemid = Integer.parseInt(request.getParameter("itemid"));
+                int supplierid = Integer.parseInt(request.getParameter("supplierid"));
+                int quantity = Integer.parseInt(request.getParameter("quantity"));
+                double price = Double.parseDouble(request.getParameter("price"));
+
+                Supply s = new Supply(0, itemid, quantity, price, supplierid) ;
+
+                SupplyDataAccess sd = new SupplyDataAccess() ;
+                sd.addSupply(s);
+                FoodDataAccess fd = new FoodDataAccess() ;
+                fd.updateFoodQuantity(itemid , quantity, price) ;
+                String url = request.getContextPath() + "/supply/AllSupply" ;
+                response.sendRedirect(url); 
+            }
+            else
+            {
+                response.sendRedirect("index.jsp");
+            }
             
         %>
     </body>

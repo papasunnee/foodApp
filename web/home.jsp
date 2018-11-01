@@ -1,7 +1,7 @@
 <%-- 
     Document   : home
     Created on : Oct 23, 2018, 12:40:10 PM
-    Author     : Sunday
+    Author     : Funmilola
 --%>
 
  <%@ page language="java" 
@@ -26,7 +26,7 @@
                 User currentUser = (User) session.getAttribute("currentSessionUser");
 
             %>	
-             Welcome <%= currentUser.getUid()%>
+             Welcome <%= currentUser.getId()%>
              <% }
              %>
              

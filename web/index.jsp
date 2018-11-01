@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : Oct 23, 2018, 12:38:19 PM
-    Author     : Sunday
+    Author     : Funmilola
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,7 +13,7 @@
     <!-- Meta-Tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <meta name="keywords" content="Food Signin Form a Responsive Web Template, Bootstrap Web Templates, Flat Web Templates, Android Compatible Web Template, Smartphone Compatible Web Template, Free Webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design">
+    <meta name="keywords" content="">
     <script>
         addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
@@ -46,7 +46,7 @@
         
         //redirect user to home page if already logged in
         if(username!=null){
-            response.sendRedirect("home.jsp");
+            response.sendRedirect( request.getContextPath() + "/fooditem");
         }
 //        String status=request.getParameter("status");
 //        

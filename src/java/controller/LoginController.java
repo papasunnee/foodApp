@@ -5,7 +5,6 @@
  */
 package controller;
 
-import bean.Product;
 import bean.User;
 import dao.DBConnect;
 import java.io.IOException;
@@ -59,11 +58,11 @@ public class LoginController extends HttpServlet {
                 
                 if(rs.next()){
                     //request.getRequestDispatcher("/home.jsp").forward(request, response);
-                      user.setId(rs.getInt("uid"));
+                      user.setId(rs.getInt("id"));
                       HttpSession session = request.getSession(true);	    
                       session.setAttribute("currentSessionUser",user); 
                       session.setAttribute("username",user.getUsername()); 
-                      response.sendRedirect("home.jsp");
+                      response.sendRedirect(request.getContextPath()+ "/fooditem");
                 }else{
                     request.getSession().setAttribute("em", "Sorry, User not found.");
                     response.sendRedirect("index.jsp");

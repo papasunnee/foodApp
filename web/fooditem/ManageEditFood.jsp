@@ -1,7 +1,7 @@
 <%-- 
     Document   : ManageEdit
     Created on : Oct 28, 2018, 12:14:49 PM
-    Author     : Sunday
+    Author     : Funmilola
 --%>
 
 <%@page import="dao.FoodDataAccess"%>
