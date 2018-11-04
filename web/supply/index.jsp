@@ -26,11 +26,15 @@
     <sql:setDataSource var="ds" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/food_app" user="root" password=""/>
  
      <jsp:include page="/loginHeader.jsp" />
+     <%
+        if(session.getAttribute("username") == null){
+            response.sendRedirect(request.getContextPath());
+        }   
+    %>
 
     <!-- Begin page content -->
     <main role="main" class="container">
       <h1 class="mt-5">Create New Supply</h1>
-      <h1 class="float-right">Create New Supply</h1>
       <form name="create_supply" action="${pageContext.request.contextPath}/supply/ManageAddSupply.jsp" method="post">
          <div class="form-group">
             <sql:query dataSource="${ds}" var="result">

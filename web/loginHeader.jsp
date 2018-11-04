@@ -1,13 +1,5 @@
-<%@page import="bean.User"%>
 <% 
-    if(null == session.getAttribute("currentSessionUser")){
-        response.sendRedirect(request.getContextPath());
-    }
-    else
-    {
-    User currentUser = (User) session.getAttribute("currentSessionUser");
-    }
-
+    //response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
 
 <header>
@@ -28,7 +20,7 @@
               <a class="nav-link" href="${pageContext.request.contextPath}/supply">Supply</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="${pageContext.request.contextPath}/user">Sales</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/invoice">Sales</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/user">Users</a>

@@ -14,14 +14,18 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <% 
+        <%
+            if(session.getAttribute("username") == null){
+                response.sendRedirect(request.getContextPath());
+            }   
+
             String fname = request.getParameter("fname");
             String lname = request.getParameter("lname");
             String mname = request.getParameter("mname");
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
             String address = request.getParameter("address");
-            int roleId = Integer.parseInt(request.getParameter("roleId")) ;
+            int roleId = Integer.parseInt(request.getParameter("role_id")) ;
             String gender = request.getParameter("gender");
             String username = request.getParameter("username");
             String password = request.getParameter("password");

@@ -16,10 +16,10 @@
         <title>Add User Manager</title>
     </head>
     <body>
-        <% 
-            if(null == session.getAttribute("currentSessionUser")){
+        <%
+            if(session.getAttribute("username") == null){
                 response.sendRedirect(request.getContextPath());
-            }
+            }   
             if(request.getParameter("itemid") != null){
                 int itemid = Integer.parseInt(request.getParameter("itemid"));
                 int supplierid = Integer.parseInt(request.getParameter("supplierid"));

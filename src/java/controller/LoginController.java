@@ -44,14 +44,14 @@ public class LoginController extends HttpServlet {
             User user = new User();
             user.setUsername(request.getParameter("username"));
             user.setPassword(request.getParameter("password"));
-            String name = request.getParameter("username");
+            String username = request.getParameter("username").toLowerCase();
             String password= request.getParameter("password");
             
             try {
                 Connection con = DBConnect.getConnection();
                 String sql = "select * from users where username=? and password=?";
                 PreparedStatement pst = con.prepareStatement(sql);
-                pst.setString(1, name);
+                pst.setString(1, username);
                 pst.setString(2, password);
                 
                 ResultSet rs = pst.executeQuery();
@@ -59,9 +59,13 @@ public class LoginController extends HttpServlet {
                 if(rs.next()){
                     //request.getRequestDispatcher("/home.jsp").forward(request, response);
                       user.setId(rs.getInt("id"));
-                      HttpSession session = request.getSession(true);	    
+                      HttpSession session = request.getSession();	    
                       session.setAttribute("currentSessionUser",user); 
-                      session.setAttribute("username",user.getUsername()); 
+                      session.setAttribute("username",username.toUpperCase()); 
+                      session.setAttribute("fname",user.getFname()); 
+                      String role[] = {"","Admin", "Manager","Staff"} ;
+                      session.setAttribute("user_role_id",rs.getInt("role_id"));
+                      session.setAttribute("user_type",role[rs.getInt("role_id")]); 
                       response.sendRedirect(request.getContextPath()+ "/fooditem");
                 }else{
                     request.getSession().setAttribute("em", "Sorry, User not found.");

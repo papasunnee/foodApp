@@ -11,17 +11,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edit Supplier</title>
+        <title>Edit Supplier :: FoodStore App</title>
     </head>
     <body>
-        <% 
-            if(null == session.getAttribute("currentSessionUser")){
+        <%
+            if(session.getAttribute("username") == null){
                 response.sendRedirect(request.getContextPath());
-            }
-            else
-            {
-            User currentUser = (User) session.getAttribute("currentSessionUser");
-            }
+            }  
        
             String suppliername = request.getParameter("suppliername");
             String supplierphone = request.getParameter("supplierphone");

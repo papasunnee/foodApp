@@ -24,6 +24,11 @@
 
 
     <jsp:include page="/loginHeader.jsp" />
+    <%
+        if(session.getAttribute("username") == null){
+            response.sendRedirect(request.getContextPath());
+        }   
+    %>
 
     <!-- Begin page content -->
     <main role="main" class="container">
@@ -46,6 +51,7 @@
          
          
         <button type="submit" name="insert" class="btn btn-primary">Create Supplier</button>
+        <a href="${pageContext.request.contextPath}/supplier/AllSupplier"  class="btn btn-success">View Supplier List</a>
       </form>
     </main>
 

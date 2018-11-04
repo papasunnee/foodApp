@@ -24,10 +24,11 @@ public class User {
     private String dob;
     private String gender;
     private int role_id ;
+    private String name ;
     
     public User() {
     }
-    public User(int id, String fname, String lname, String mname, String phone, String email, String address, String username, String password, String gender, int role_id) {
+    public User(int id, String fname, String lname, String mname, String phone, String email, String address, String username, String password, String gender, int role_id, String name) {
         this.id = id ;
         this.fname = fname;
         this.lname = lname;
@@ -39,12 +40,20 @@ public class User {
         this.password = password;
         this.gender = gender;
         this.role_id = role_id ;
+        this.name = name ;
     }
     
     public int getId() {
         return id ;
     }
     
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     public void setId(int id) {
         this.id = id;
     }

@@ -15,39 +15,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sticky Footer Navbar Template for Bootstrap</title>
+    <title>Edit Food Item :: FoodStore App</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/sticky-footer-navbar.css" rel="stylesheet">
   </head>
 
   <body>
 
-    <header>
-      <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">FoodStore App</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-          </ul>
-          <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
-    </header>
+    <jsp:include page="/loginHeader.jsp" />
+    <%
+      if(session.getAttribute("username") == null){
+            response.sendRedirect(request.getContextPath());
+      }   
+    %>
 
     <!-- Begin page content -->
     <main role="main" class="container">
@@ -74,9 +54,8 @@
           <input type="text" name="description" class="form-control" id="description" placeholder="Description" value="${f.description}">
         </div>
         
-       
-        
         <button type="submit" name="update" class="btn btn-primary">Update Food Item</button>
+        <a href="${pageContext.request.contextPath}/fooditem/AllFood"  class="btn btn-success">View Food Items</a>
       </form>
       </c:forEach>
     </main>

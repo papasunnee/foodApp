@@ -48,9 +48,9 @@ public class UserDataAccess {
     public static List<User> getAll(){
         List<User> ls = new LinkedList<>() ;
         try {
-            ResultSet rs = DBConnect.getPreparedStatement("SELECT id,fname,lname,mname,phone,email,address,username,password,gender,role_id from users").executeQuery() ;
+            ResultSet rs = DBConnect.getPreparedStatement("SELECT users.id,fname,lname,mname,phone,email,address,username,password,gender,role_id,name from users join roles on users.role_id = roles.id").executeQuery() ;
             while(rs.next()){
-                User u = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11)) ;
+                User u = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11),rs.getString(12)) ;
                 ls.add(u) ;
             }
         } catch (ClassNotFoundException | SQLException ex) {

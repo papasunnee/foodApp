@@ -3,6 +3,7 @@
     Created on : Oct 29, 2018, 1:30:15 PM
     Author     : Funmilola
 --%>
+<%@page import="bean.User"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
@@ -22,42 +23,30 @@
 
   <body>
     <sql:setDataSource var="ds" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/food_app" user="root" password=""/>
-    <header>
-      <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">FoodStore App</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-          </ul>
-          <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
-    </header>
+    <jsp:include page="/loginHeader.jsp" />
+    <%
+        if(session.getAttribute("username") == null){
+            response.sendRedirect(request.getContextPath());
+        }   
+    %>
 
     <!-- Begin page content -->
     <main role="main" class="container">
       <h1 class="mt-5">Create New Invoice</h1>
-      <h5 class="text-success">Staff Name</h5>
-      <form name="create_supply" action="${pageContext.request.contextPath}/supply/ManageAddSupply.jsp" method="post">
+      <h6 class="text-success">
+          <span class="text-muted">
+              <%
+                out.println(session.getAttribute("user_type")) ;
+              %>:
+          </span>
+          <%
+              out.println(session.getAttribute("username")) ;
+          %>
+      </h6>
+      <form name="create_supply" action="${pageContext.request.contextPath}/supply/ManageAddInvoice.jsp" method="get">
         <sql:query dataSource="${ds}" var="result">
             SELECT * from fooditem;
         </sql:query>
-         
         <table  class="table table-hover small-text" id="tb">
             <tr class="tr-header">
                 <th>Food Item Name</th>
@@ -77,8 +66,8 @@
                     </select>
                 </td>
                 <td><input type="text" name="quantity[]" class="form-control"></td>
-                <td><input type="text" name="mobileno[]" class="form-control" readonly></td>
-                <td><input type="text" name="mobileno[]" class="form-control" readonly></td>
+                <td><input type="text" name="price[]" class="form-control" readonly value="0"/></td>
+                <td><input type="text" name="totalprice[]" class="form-control" readonly value="0"/></td>
                 <td><a href='javascript:void(0);'  class='remove'><span class='glyphicon glyphicon-remove'>x</span></a></td>
             </tr>
         </table>
@@ -114,6 +103,9 @@ $(function(){
            } else {
              alert("Sorry!! Can't remove first row!");
            }
+      });
+      $("select").on("change", function(e){
+          console.log(e) ;
       });
 });      
 </script>

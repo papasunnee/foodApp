@@ -14,7 +14,10 @@
         <title>Add User Manager</title>
     </head>
     <body>
-        <% 
+        <%
+            if(session.getAttribute("username") == null){
+                response.sendRedirect(request.getContextPath());
+            } 
             String finame = request.getParameter("finame");
             double price = Double.parseDouble(request.getParameter("price"));
             int qty = Integer.parseInt(request.getParameter("qty"));

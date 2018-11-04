@@ -13,7 +13,10 @@
         <title>Edit Supplier</title>
     </head>
     <body>
-        <% 
+        <%
+            if(session.getAttribute("username") == null){
+                response.sendRedirect(request.getContextPath());
+            }   
             String suppliername = request.getParameter("suppliername");
             String supplierphone = request.getParameter("supplierphone");
             String supplieraddress = request.getParameter("supplieraddress");

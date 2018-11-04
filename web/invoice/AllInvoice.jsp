@@ -15,63 +15,42 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Supply List :: FoodStore App</title>
+    <title>Supplier List :: FoodStore App</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/sticky-footer-navbar.css" rel="stylesheet">
   </head>
 
   <body>
 
-    <header>
-      <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">FoodStore App</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-          </ul>
-          <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
-    </header>
+    <jsp:include page="/loginHeader.jsp" />
+    <%
+        if(session.getAttribute("username") == null){
+            response.sendRedirect(request.getContextPath());
+        }   
+    %>
 
     <!-- Begin page content -->
     <main role="main" class="container">
-      <h1 class="mt-5">List of Created Food Item</h1>
-      <a href="index.jsp" name="add_new_supply" class="mt-3 mb-3 btn btn-success">Add New Supply</a>
+      <h1 class="mt-5">List of Suppliers</h1>
+      <a href="index.jsp" name="add_new_supplier" class="mt-3 mb-3 btn btn-success">
+          Add New Supplier</a>
       <table class="table table-hover">
         <thead>
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Supplier's Name</th>
-            <th scope="col">Food Item Name</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Price</th>
+            <th scope="col">Supplier's Phone</th>
+            <th scope="col">Supplier's Address</th>
             <th scope="col">Modify</th>
           </tr>
         </thead>
         <tbody>
-            <c:forEach items="${AllSupply}" var="s">
+            <c:forEach items="${AllSupplier}" var="s">
                 <tr>
                 <th scope="row">${s.id}</th>
                 <td>${s.suppliername}</td>
-                <td>${s.finame}</td>
-                <td>${s.quantity}</td>
-                <td>${s.price}</td>
+                <td>${s.supplierphone}</td>
+                <td>${s.supplieraddress}</td>
                 <td><a href="edit?id=${s.id}">Edit</a> | 
                 <a href="delete?id=${s.id}">Delete</a></td>
 

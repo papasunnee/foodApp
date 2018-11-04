@@ -3,7 +3,8 @@
     Created on : Oct 29, 2018, 1:30:15 PM
     Author     : Funmilola
 --%>
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!doctype html>
@@ -20,8 +21,13 @@
   </head>
 
   <body>
-      <jsp:include page="/loginHeader.jsp" />
-
+      <jsp:include page="/loginHeader.jsp"/>
+      <%
+      if(session.getAttribute("username") == null){
+        
+            response.sendRedirect(request.getContextPath());
+        }   
+      %>
     <!-- Begin page content -->
     <main role="main" class="container">
       <h1 class="mt-5">Create New User</h1>
@@ -79,9 +85,23 @@
           <input type="text" name="address" class="form-control" id="address" placeholder="Address">
         </div>
         
-         <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" name="username" class="form-control" id="username" placeholder="Username">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" id="username" placeholder="Username"/>
+          </div>
+          <sql:setDataSource var="ds" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/food_app" user="root" password=""/>
+          <sql:query dataSource="${ds}" var="result">
+            SELECT * from roles;
+          </sql:query>
+          <div class="form-group col-md-6">
+                <label for="role">User Role</label>
+                <select name="role_id" class="form-control">
+                    <c:forEach var="row" items="${result.rows}">
+                        <option value='<c:out value="${row.id}"/>'> <c:out value="${row.name}"/> </option>
+                    </c:forEach>
+                </select>
+          </div>
         </div>
           
         <div class="form-row">
