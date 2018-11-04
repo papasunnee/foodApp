@@ -53,26 +53,29 @@
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Total Cost</th>
-                <th><a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Person"><span class="glyphicon glyphicon-plus">d</span></a></th>
+                <th><a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Person"><span class="glyphicon glyphicon-plus">save</span></a></th>
             </tr>
             <tr>
                 <td>
 
-                    <select name="designation[]" class="form-control">
-                        <option value="" name="itemid" selected>Select Food Item</option>
+                    <select name="designation" class="form-control">
+                        <option value="-1" name="itemid" selected>Select Food Item</option>
                             <c:forEach var="row" items="${result.rows}">
-                                <option value='<c:out value="${row.id}"/>'> <c:out value="${row.finame}"/> </option>
+                                <option value='<c:out value="${row.id}"/>' data-price='<c:out value="${row.price}"/>' data-label='<c:out value="${row.finame}"/>' data-quantity='<c:out value="${row.quantity}"/>'> <c:out value="${row.finame}"/> </option>
                             </c:forEach>
                     </select>
                 </td>
-                <td><input type="text" name="quantity[]" class="form-control"></td>
-                <td><input type="text" name="price[]" class="form-control" readonly value="0"/></td>
-                <td><input type="text" name="totalprice[]" class="form-control" readonly value="0"/></td>
-                <td><a href='javascript:void(0);'  class='remove'><span class='glyphicon glyphicon-remove'>x</span></a></td>
+                <td><input type="number" min="0" name="quantity" id="quantity" class="form-control"></td>
+                <td><input type="text" name="price" id="price" class="form-control" readonly value="0"/></td>
+                <td><input type="text" name="totalprice" id="totalprice" class="form-control" readonly value="0"/></td>
+                <td></td>
             </tr>
         </table>
+            <div class="invoicedetail">
+                
+            </div>
 
-        <button type="submit" name="insert" class="btn btn-success">Create Invoice</button>
+        <button type="button" name="insert" class="btn btn-success">Create Invoice</button>
       </form>
     </main>
 
@@ -89,23 +92,69 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
  
 <script>
 $(function(){
+    var sales = [] ;
     $('#addMore').on('click', function() {
-              var data = $("#tb tr:eq(1)").clone(true).appendTo("#tb");
-              data.find("input").val('');
+//              var data = $("#tb tr:eq(1)").clone(true).appendTo("#tb");
+//              data.find("input").val('');
+                var qty = $("input#quantity").val() ;
+                var p = $("input#price").val() ;
+                var tp =$("input#totalprice").val() ;
+                var dl = $("select").find('option:selected').data("label") ;
+                if($("select").val() < 0 || p == 0 || tp == 0 || isNaN(tp)){
+                    alert("Please Input all necessary values") ;
+                }else{
+                    let detail = {
+                        price : p,
+                        quantity : qty,
+                        totalprice : tp,
+                        fooditem : dl
+                    } ;
+                    sales.push(detail) ;
+                    console.log(sales) ;
+                    var total = 0 ;
+                    var text = "<table  class='table table-hover small-text'>" ;
+                    text += sales.map(function(sale){
+                              total = parseFloat(sale.totalprice) + total ;
+                              return "<tr><td>"+sale.quantity+"</td><td>"+sale.fooditem+"</td><td>"+sale.price+"</td><td>"+sale.totalprice+"</td></tr>" ;
+                        });
+                        text+= "<tr><td colspan='4' style='text-align:right'>Total : "+total+"</td></tr>" ;
+                        text += "</table>" ;
+                    $("div.invoicedetail").html(text) ;
+                    $("input#price").val(0) ;
+                    $("input#totalprice").val(0) ;
+                    $("input#quantity").val(null) ;
+                    $("select").val(-1);
+                }
      });
-     $(document).on('click', '.remove', function() {
-         var trIndex = $(this).closest("tr").index();
-            if(trIndex>1) {
-             $(this).closest("tr").remove();
-           } else {
-             alert("Sorry!! Can't remove first row!");
-           }
-      });
+     
       $("select").on("change", function(e){
-          console.log(e) ;
+            var price = $(this).find('option:selected').data("price") ;
+            $("input#price").val(price) ;
+            $("input#totalprice").val(0) ;
+            $("input#quantity").val(null) ;
+      });
+      
+      $("#quantity").on("keyup", function(e){
+            var quantity = $("select").find('option:selected').data("quantity") ;
+            if($(this).val()== null){
+                $("input#totalprice").val(0) ;
+                $("input#quantity").val(0) ;
+            }
+            else if($(this).val() > quantity){
+                alert("Product Quantity Insufficient") ;
+                $("input#totalprice").val(0) ;
+                $("input#quantity").val(null) ;
+            }
+            else
+            {
+                var price = $("select").find('option:selected').data("price") ;
+                 var qty = $("input#quantity").val() ;
+                $("input#totalprice").val(price*qty) ;
+            }
       });
 });      
 </script>
