@@ -22,7 +22,11 @@ public class DBConnect {
     
     static{
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            try {
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+            } catch (InstantiationException | IllegalAccessException ex) {
+                Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -44,7 +48,7 @@ public class DBConnect {
     }
     
     public static void main(String[] args) throws ClassNotFoundException, SQLException{
-        getPreparedStatement("select * from fooditem") ;
+        System.out.println(getPreparedStatement("select * from fooditem")) ;
     }
     
 }
