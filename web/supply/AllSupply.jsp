@@ -52,8 +52,10 @@
                 <td>${s.finame}</td>
                 <td>${s.quantity}</td>
                 <td>${s.price}</td>
-                <td><a href="edit?id=${s.id}">Edit</a> | 
-                <a href="delete?id=${s.id}">Delete</a></td>
+                <td><a href="edit?id=${s.id}">Edit</a> 
+<!--                    | 
+                <a href="delete?id=${s.id}">Delete</a>-->
+                </td>
 
             </tr>
             </c:forEach>

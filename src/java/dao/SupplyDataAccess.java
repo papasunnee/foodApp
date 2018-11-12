@@ -60,13 +60,14 @@ public class SupplyDataAccess {
         return ls;
     } 
     
-    public static List<Supplier> getSupplierById(int id){
-        List<Supplier> ls = new LinkedList<>() ;
-        String sql = "select * from supplier where id = " + id ;
+    public static List<Supply> getSupplyById(int id){
+        List<Supply> ls = new LinkedList<>() ;
+        //int id, int itemid, int quantity, double price, int supplierid, String finame, String description
+        String sql = "select supply.id, itemid, supply.quantity, supply.price, supplierid, finame, description, suppliername from supply join fooditem on supply.itemid = fooditem.id join supplier on supply.supplierid = supplier.id where supply.id = " + id ;
         try {
             ResultSet rs = DBConnect.getPreparedStatement(sql).executeQuery() ;
             while(rs.next()){
-                Supplier s = new Supplier(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)) ;
+                Supply s = new Supply(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8)) ;
                 ls.add(s) ;
             }
         } catch (ClassNotFoundException | SQLException ex) {
@@ -75,16 +76,14 @@ public class SupplyDataAccess {
         return ls;
     }
     
-    public void edit(int id, String suppliername, String supplierphone, String supplieraddress){
+    public void edit(int id, double price){
        
         try {
-            String sql = "update supplier set suppliername = ? , supplierphone = ? , supplieraddress = ? where id = ? " ;
+            String sql = "update supply set price = ? where id = ? " ;
             PreparedStatement  ps ;
             ps = DBConnect.getPreparedStatement(sql);
-            ps.setString(1, suppliername);
-            ps.setString(2, supplierphone);
-            ps.setString(3, supplieraddress); 
-            ps.setInt(4, id);
+            ps.setDouble(1, price);
+            ps.setInt(2, id);
             int d = ps.executeUpdate() ;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,7 +91,7 @@ public class SupplyDataAccess {
     }
     
     public void delete(int id){
-        String sql = "delete from supplier where id = ? " ;
+        String sql = "delete from supply where id = ? " ;
         try {
             PreparedStatement ps = DBConnect.getPreparedStatement(sql) ;
             ps.setInt(1, id);

@@ -64,7 +64,7 @@
          <div class="form-row">
             <div class="form-group col-md-6">
               <label for="fooditemquantity">Quantity</label>
-              <input type="integer" min="0" name="quantity"class="form-control" required id="fooditemquantity" placeholder="Quantity">
+              <input type="number" min="0" name="quantity"class="form-control" required id="fooditemquantity" placeholder="Quantity">
             </div>
             <div class="form-group col-md-6">
               <label for="price">Unit Price</label>

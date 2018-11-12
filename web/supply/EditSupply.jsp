@@ -31,27 +31,32 @@
 
     <!-- Begin page content -->
     <main role="main" class="container">
-      <h1 class="mt-5">Edit Supplier</h1>
-      <c:forEach items="${getSupplierById}" var="s">
-      <form name="create_food_item" action="ManageEditSupplier.jsp" method="post">
+      <h1 class="mt-5">Edit Supply</h1>
+      <c:forEach items="${getSupplyById}" var="s">
+      <form name="create_food_item" action="ManageEditSupply.jsp" method="post">
          <input type="hidden" name="id" value="${s.id}" />
          <div class="form-group">
-            <label for="suppliername">Supplier's Name</label>
-            <input type="text" required name="suppliername"class="form-control" id="suppliername" placeholder="Supplier's Name" value="${s.suppliername}">
+            <label for="fooditemname">Food Item Name</label>
+            <input type="text" name="finame" class="form-control" readonly id="fooditemname" placeholder="Food Item Name" value="${s.finame}">
+          </div>
+         
+         <div class="form-group">
+            <label for="supplierid">Supplier's Name</label>
+            <input type="text" name="suppliername" class="form-control" readonly id="fooditemname" placeholder="Food Item Name" value="${s.suppliername}">
           </div>
           
-          <div class="form-group">
-            <label for="supplierphone">Supplier's Phone</label>
-            <input type="text" required name="supplierphone"class="form-control" id="supplierphone" placeholder="Supplier's Phone" value="${s.supplierphone}">
-          </div>
-          
-          <div class="form-group">
-            <label for="supplieraddress">Supplier's Address</label>
-            <input type="text" required name="supplieraddress"class="form-control" id="supplieraddress" placeholder="Supplier's Address" value="${s.supplieraddress}">
-          </div>
-          
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="fooditemquantity">Quantity</label>
+              <input type="number" min="0" name="quantity"class="form-control" required readonly id="fooditemquantity" placeholder="Quantity" value="${s.quantity}">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="price">Unit Price</label>
+              <input type="number" min="0" step=".01" required name="price" class="form-control" id="price" placeholder="Price" value="${s.price}">
+            </div>
+         </div> 
         
-        <button type="submit" name="update" class="btn btn-primary">Update Supplier</button>
+        <button type="submit" name="update" class="btn btn-primary">Update Supply</button>
         <a href="${pageContext.request.contextPath}/supply/AllSupply"  class="btn btn-success">View Supply List</a>
       </form>
       </c:forEach>

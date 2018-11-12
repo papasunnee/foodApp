@@ -33,7 +33,7 @@
     <!-- Begin page content -->
     <main role="main" class="container">
       <h1 class="mt-5">Create New Supplier</h1>
-      <form name="create_food_item" action="${pageContext.request.contextPath}/supplier/ManageAddSupplier.jsp" method="post">
+      <form name="create_supplier" id="create_supplier" action="${pageContext.request.contextPath}/supplier/ManageAddSupplier.jsp" method="post">
          <div class="form-group">
             <label for="suppliername">Supplier's Name</label>
             <input type="text" required name="suppliername"class="form-control" id="suppliername" placeholder="Supplier's Name">
@@ -41,7 +41,7 @@
          
          <div class="form-group">
             <label for="supplierphone">Supplier's Phone</label>
-            <input type="text"  required name="supplierphone" class="form-control" id="supplierphone" placeholder="Supplier's Phone">
+            <input type="text"  required name="supplierphone" id="supplierphone" class="form-control" id="supplierphone" placeholder="Supplier's Phone">
           </div>
          
          <div class="form-group">
@@ -68,5 +68,22 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script>
+        function validatePhone(phone){
+            return /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]{9,11}$/g.test(phone) ;
+        }
+        $(document).ready(function(){
+            $("#create_supplier").on("submit", function(e){
+               e.preventDefault() ;
+               if(validatePhone(document.getElementById("supplierphone").value)){
+                   this.submit() ;
+               }
+               else
+               {
+                   alert("Invalid Phone Number") ;
+               }
+            });
+        });
+    </script>
   </body>
 </html>

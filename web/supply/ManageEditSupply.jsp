@@ -4,8 +4,8 @@
     Author     : Funmilola
 --%>
 
+<%@page import="dao.SupplyDataAccess"%>
 <%@page import="bean.User"%>
-<%@page import="dao.SupplierDataAccess"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,14 +19,12 @@
                 response.sendRedirect(request.getContextPath());
             }  
        
-            String suppliername = request.getParameter("suppliername");
-            String supplierphone = request.getParameter("supplierphone");
-            String supplieraddress = request.getParameter("supplieraddress");
+            double price = Double.parseDouble(request.getParameter("price"));
             int id = Integer.parseInt(request.getParameter("id"));
             
-            SupplierDataAccess sd = new SupplierDataAccess() ;
-            sd.edit(id, suppliername, supplierphone, supplieraddress);
-            String url = request.getContextPath() + "/supplier/AllSupplier" ;
+            SupplyDataAccess sd = new SupplyDataAccess() ;
+            sd.edit(id, price);
+            String url = request.getContextPath() + "/supply/AllSupply" ;
             response.sendRedirect(url);
             
         %>

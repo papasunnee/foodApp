@@ -44,7 +44,18 @@ public class Supply {
         this.supplierid = supplierid;
         this.suppliername = suppliername;
     }
-
+    
+    public Supply(int id, int itemid, int quantity, double price, int supplierid, String finame, String description, String suppliername) {
+        this.id = id;
+        this.itemid = itemid;
+        this.quantity = quantity;
+        this.price = price;
+        this.supplierid = supplierid;
+        this.suppliername = suppliername;
+        this.finame = finame;
+        this.description = description;
+    }
+    
     public Supply(int id, int itemid, int quantity, double price, int supplierid, String finame, String description, String suppliername,  String supplierphone, String supplieraddress) {
         this.id = id;
         this.itemid = itemid;
@@ -144,7 +155,5 @@ public class Supply {
 
     public void setSuppliername(String suppliername) {
         this.suppliername = suppliername;
-    }
-    
-    
+    }    
 }
