@@ -24,10 +24,15 @@
             String description = request.getParameter("description");
             Food f = new Food(0 , finame,price, qty, description) ;
             FoodDataAccess fd = new FoodDataAccess() ;
-            fd.addFood(f);
-            String url = request.getContextPath() + "/fooditem/AllFood" ;
-            response.sendRedirect(url);
-            
+            if(fd.addFood(f) > 0){
+                String url = request.getContextPath() + "/fooditem/AllFood" ;
+                response.sendRedirect(url);
+            }
+            else
+            {
+               String url = request.getContextPath() + "/fooditem/" ;
+               response.sendRedirect(url); 
+            }
         %>
     </body>
 </html>

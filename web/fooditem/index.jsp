@@ -43,7 +43,7 @@
             </div>
             <div class="form-group col-md-6">
               <label for="price">Unit Price</label>
-              <input type="number" min="0" required name="price" class="form-control" id="price" placeholder="Price">
+              <input type="number" min="0" step="0.01" required name="price" class="form-control" id="price" placeholder="Price">
             </div>
         </div>
         <div class="form-group">
@@ -51,15 +51,6 @@
           <input type="text" name="description" class="form-control" id="description" placeholder="Description">
         </div>
         
-       
-        <div class="form-group">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-              Check me out
-            </label>
-          </div>
-        </div>
         <button type="submit" name="insert" class="btn btn-primary">Create Food Item</button>
         <a href="${pageContext.request.contextPath}/fooditem/AllFood"  class="btn btn-success">View Food Items</a>
       </form>

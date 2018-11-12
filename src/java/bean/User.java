@@ -28,6 +28,22 @@ public class User {
     
     public User() {
     }
+
+    public User(int id, String fname, String lname, String mname, String phone, String email, String address, String username, String password, String gender, int role_id) {
+        this.id = id;
+        this.fname = fname;
+        this.lname = lname;
+        this.mname = mname;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.role_id = role_id;
+    }
+    
+    //User u = new User(0, fname, lname,  mname, phone, email, address, username,  password, gender, roleId) ;
     public User(int id, String fname, String lname, String mname, String phone, String email, String address, String username, String password, String gender, int role_id, String name) {
         this.id = id ;
         this.fname = fname;

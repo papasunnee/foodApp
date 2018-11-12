@@ -29,15 +29,19 @@
             String gender = request.getParameter("gender");
             String username = request.getParameter("username");
             String password = request.getParameter("password");
-//            String empDate = request.getParameter("empDate");
-//            String dob = request.getParameter("dob");
             
             
             User u = new User(0, fname, lname,  mname, phone, email, address, username,  password, gender, roleId) ;
             UserDataAccess ud = new UserDataAccess() ;
-            ud.addUser(u);
-            String url = request.getContextPath() + "/user/AllUser" ;
-            response.sendRedirect(url);
+            if(ud.addUser(u) > 0 ){
+                String url = request.getContextPath() + "/user/AllUser" ;
+                response.sendRedirect(url);
+            }
+            else
+            {
+                String url = request.getContextPath() + "/user/" ;
+                response.sendRedirect(url);
+            }
             
         %>
     </body>

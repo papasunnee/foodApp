@@ -72,7 +72,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script>
         function validatePhone(phone){
-            return /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g.test(phone) ;
+            return /^\d{11}$/g.test(phone) ;
         }
         $(document).ready(function(){
             $("#edit_supplier").on("submit", function(e){

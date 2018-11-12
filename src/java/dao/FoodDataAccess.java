@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class FoodDataAccess {
     
-    public void addFood(Food f){
+    public int addFood(Food f){
         
         try {
                 String sql = "insert into fooditem (finame, price, quantity, description) values (?, ?, ?, ?)";
@@ -30,17 +30,19 @@ public class FoodDataAccess {
                 pst.setDouble(2, f.getPrice());
                 pst.setInt(3, f.getQty());
                 pst.setString(4, f.getDescription());
-                int value = pst.executeUpdate();
+                return pst.executeUpdate();
+                
 //                if (value > 0) {
 //                    request.getSession().setAttribute("sm", "Food Item Saved Successfully");
 //                } else {
 //                    request.getSession().setAttribute("em", "Food Item not saved");
 //                }
-//
-//                request.getRequestDispatcher("/createFoodItem.jsp").forward(request, response);
+
+                //request.getRequestDispatcher("/createFoodItem.jsp").forward(request, response);
              } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return 0;
     }
     
     public static List<Food> getAll(){

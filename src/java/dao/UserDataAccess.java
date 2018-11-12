@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * @author Sunday
  */
 public class UserDataAccess {
-    public void addUser(User u){
+    public int addUser(User u){
         
         try {	
 
@@ -38,11 +38,12 @@ public class UserDataAccess {
                 pst.setString(9, u.getGender());
                 pst.setInt(10, u.getRoleId());
                 
-                pst.executeUpdate();
+                return pst.executeUpdate();
                 
              } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return 0;
     }
     
     public static List<User> getAll(){

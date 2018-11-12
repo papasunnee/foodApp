@@ -31,7 +31,7 @@
     <!-- Begin page content -->
     <main role="main" class="container">
       <h1 class="mt-5">Create New User</h1>
-      <form name="create_food_item" action="${pageContext.request.contextPath}/user/ManageAddUser.jsp" method="post">
+      <form name="create_user" id="create_user" action="${pageContext.request.contextPath}/user/ManageAddUser.jsp" method="post">
          
           <div class="form-row">
             <div class="form-group col-md-4">
@@ -140,5 +140,34 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script>
+        function validatePhone(phone){
+            return /^\d{11}$/g.test(phone) ;
+        }
+        function validEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
+        $(document).ready(function(){
+            $("#create_user").on("submit", function(e){
+               e.preventDefault() ;
+               var errorMessage = "" ;
+               if(!validatePhone(document.getElementById("phone").value)){
+                   errorMessage += "Invalid Phone Number \n" ;
+               }
+               else if(!validateEmail(document.getElementById("email").value)){
+                   errorMessage += "Invalid Email \n" ;
+               }
+               
+               if(errorMessage.length === 0){
+                   this.submit() ;
+               }
+               else
+               {
+                   alert(errorMessage) ;
+               }
+            });
+        });
+    </script>
   </body>
 </html>
