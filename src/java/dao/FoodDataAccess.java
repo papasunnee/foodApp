@@ -30,15 +30,12 @@ public class FoodDataAccess {
                 pst.setDouble(2, f.getPrice());
                 pst.setInt(3, f.getQty());
                 pst.setString(4, f.getDescription());
-                return pst.executeUpdate();
+                String lowerfiname = f.getFiname().toLowerCase() ;
+                Boolean exists = DBConnect.getPreparedStatement("select * from fooditem where finame = '" + lowerfiname + "'").executeQuery().next() ;
                 
-//                if (value > 0) {
-//                    request.getSession().setAttribute("sm", "Food Item Saved Successfully");
-//                } else {
-//                    request.getSession().setAttribute("em", "Food Item not saved");
-//                }
-
-                //request.getRequestDispatcher("/createFoodItem.jsp").forward(request, response);
+                if(exists)
+                    return -5 ;
+                return pst.executeUpdate();
              } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
