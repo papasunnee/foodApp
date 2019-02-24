@@ -32,7 +32,13 @@
     <!-- Begin page content -->
     <main role="main" class="container">
       <h1 class="mt-5">List of Created Food Item</h1>
-      <a href="index.jsp" name="add_new_fooditem" class="mt-3 mb-3 btn btn-success">Add New Food Item</a>
+       <%
+            if((int)session.getAttribute("user_role_id") < 2){
+       %>
+                <a href="index.jsp" name="add_new_fooditem" class="mt-3 mb-3 btn btn-success">Add New Food Item</a>
+      <%
+          }
+      %>
       <table class="table table-hover">
         <thead>
           <tr>
@@ -41,7 +47,13 @@
             <th scope="col">Unit Price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Description</th>
+            <%
+                if((int)session.getAttribute("user_role_id") < 2){
+            %>
             <th scope="col">Modify</th>
+            <%
+                }
+            %>
           </tr>
         </thead>
         <tbody>
@@ -52,8 +64,14 @@
                 <td>${f.price}</td>
                 <td>${f.qty}</td>
                 <td>${f.description}</td>
+                <%
+                    if((int)session.getAttribute("user_role_id") < 2){
+                %>
                 <td><a href="edit?id=${f.id}">Edit</a> | 
                 <a href="delete?id=${f.id}">Delete</a></td>
+                <%
+                    }
+                %>
 
             </tr>
             </c:forEach>
