@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edit User Manager</title>
+        <title>Edit Food Manager</title>
     </head>
     <body>
         <%

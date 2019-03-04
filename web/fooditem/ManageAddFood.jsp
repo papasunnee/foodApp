@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add User Manager</title>
+        <title>Add Food Manager</title>
     </head>
     <body>
         <%

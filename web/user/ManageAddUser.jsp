@@ -33,15 +33,23 @@
             
             User u = new User(0, fname, lname,  mname, phone, email, address, username,  password, gender, roleId) ;
             UserDataAccess ud = new UserDataAccess() ;
-            if(ud.addUser(u) > 0 ){
-                String url = request.getContextPath() + "/user/AllUser" ;
+            String url = request.getContextPath() + "/user/" ;
+            int index = ud.addUser(u) ;
+            if(index > 0){
+                url = request.getContextPath() + "/user/AllUser" ;
                 response.sendRedirect(url);
-            }
-            else
+            }else if( index == -5)
             {
-                String url = request.getContextPath() + "/user/" ;
-                response.sendRedirect(url);
+                url = request.getContextPath() + "/user/?error=e4cba4de95045a6745685f7ffd4abe1f" ;
+            }else if( index == -6)
+            {
+                url = request.getContextPath() + "/user/?error=eee914b1bc431b94c394813019227b37" ;
             }
+            else if( index == -6)
+            {
+                url = request.getContextPath() + "/user/?error=080a6fef808b67abeb925db7287b1c50" ;
+            }
+            response.sendRedirect(url);
             
         %>
     </body>

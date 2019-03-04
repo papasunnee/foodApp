@@ -20,18 +20,22 @@
   </head>
 
   <body>
-      <jsp:include page="/loginHeader.jsp" />
       <%
-      if(session.getAttribute("username") == null){
+        if(session.getAttribute("username") == null || session.getAttribute("user_role_id") == null){
         
             response.sendRedirect(request.getContextPath());
         }   
+        if((int)session.getAttribute("user_role_id") > 1){
+            response.sendRedirect(request.getContextPath() + "/fooditem/AllFood") ;
+        }
       %>
+      
+      <jsp:include page="/loginHeader.jsp" />
 
     <!-- Begin page content -->
     <main role="main" class="container">
       <h1 class="mt-5">Create New Food Item</h1>
-      <form name="create_food_item" action="${pageContext.request.contextPath}/fooditem/ManageAddFood.jsp" method="post">
+      <form class="createFoodItem" name="create_food_item" action="${pageContext.request.contextPath}/fooditem/ManageAddFood.jsp" method="post">
          <div class="form-group">
             <label for="fooditemname">Food Item Name</label>
             <input type="text" required name="finame"class="form-control" id="fooditemname" placeholder="Food Item Name">
@@ -50,8 +54,7 @@
           <label for="description">Food Item Description</label>
           <input type="text" name="description" class="form-control" id="description" placeholder="Description">
         </div>
-        
-        <button type="submit" name="insert" class="btn btn-primary">Create Food Item</button>
+         <button type="submit" name="insert" class="btn btn-primary" >Create Food Item</button>
         <a href="${pageContext.request.contextPath}/fooditem/AllFood"  class="btn btn-success">View Food Items</a>
       </form>
     </main>
@@ -97,7 +100,7 @@
             
             $("#exampleModal").on("hidden.bs.modal", function(){
                 location.href = contextPath + "/fooditem" ;
-            }) ;
+            }) ; 
          }) ;
     </script>
   </body>

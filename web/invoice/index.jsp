@@ -57,11 +57,10 @@
             </tr>
             <tr>
                 <td>
-
                     <select name="designation" class="form-control">
                         <option value="-1" name="itemid" selected>Select Food Item</option>
                             <c:forEach var="row" items="${result.rows}">
-                                <option value='<c:out value="${row.id}"/>' data-price='<c:out value="${row.price}"/>' data-label='<c:out value="${row.finame}"/>' data-quantity='<c:out value="${row.quantity}"/>'> <c:out value="${row.finame}"/> </option>
+                                <option value='<c:out value="${row.id}"/>' data-price='<c:out value="${row.price}"/>' data-label='<c:out value="${row.finame}"/>' data-quantity='<c:out value="${row.quantity}"/>'> <c:out value="${row.finame}-(${row.quantity})"/> </option>
                             </c:forEach>
                     </select>
                 </td>
@@ -104,7 +103,7 @@ $(function(){
                 var p = $("input#price").val() ;
                 var tp =$("input#totalprice").val() ;
                 var dl = $("select").find('option:selected').data("label") ;
-                if($("select").val() < 0 || p == 0 || tp == 0 || isNaN(tp)){
+                if($("select").val() < 0 || p === 0 || tp === 0 || isNaN(tp)){
                     alert("Please Input all necessary values") ;
                 }else{
                     let detail = {
@@ -138,7 +137,7 @@ $(function(){
             $("input#quantity").val(null) ;
       });
       
-      $("#quantity").on("keyup", function(e){
+      $("#quantity").on("change", function(e){
             var quantity = $("select").find('option:selected').data("quantity") ;
             if($(this).val()== null){
                 $("input#totalprice").val(0) ;

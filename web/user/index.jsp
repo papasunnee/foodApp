@@ -66,7 +66,7 @@
          <div class="form-row">
             <div class="form-group col-md-6">
               <label for="dob">Date of Birth</label>
-              <input type="date" name="dob" class="form-control" required id="dob" placeholder="Date of Birth"/>
+              <input type="date" name="dob" class="form-control" id="dob" placeholder="Date of Birth"/>
             </div>
               
             <div class="form-group col-md-6">
@@ -88,11 +88,11 @@
         <div class="form-row">
           <div class="form-group col-md-6">
                 <label for="username">Username</label>
-                <input type="text" name="username" class="form-control" id="username" placeholder="Username"/>
+                <input type="text" name="username" class="form-control" id="username" required placeholder="Username"/>
           </div>
           <sql:setDataSource var="ds" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/food_app" user="root" password=""/>
           <sql:query dataSource="${ds}" var="result">
-            SELECT * from roles;
+            SELECT id,name from roles;
           </sql:query>
           <div class="form-group col-md-6">
                 <label for="role">User Role</label>
@@ -107,19 +107,19 @@
         <div class="form-row">
             <div class="form-group col-md-6">
               <label for="password">Password</label>
-              <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+              <input type="password" name="password" class="form-control" id="password" required placeholder="Password">
             </div>
               
             <div class="form-group col-md-6">
               <label for="password">Confirm Password</label>
-              <input type="password" name="cpassword" class="form-control" id="password" placeholder="Password">
+              <input type="password" name="cpassword" class="form-control" id="cpassword" required placeholder="Password">
             </div>
           </div>
           
-          <div class="form-group">
+<!--          <div class="form-group">
             <label for="username">Employment Date</label>
             <input type="date" name="empDate" class="form-control" required id="empDate" placeholder="Employment Date"/>
-          </div>
+          </div>-->
           
         <button type="submit" name="createUser" class="btn btn-primary">Create New User</button>
         <a href="${pageContext.request.contextPath}/user/AllUser"  class="btn btn-success">View Users</a>
@@ -132,6 +132,24 @@
         <span class="text-muted">Olufunmilola Oroniran</span>
       </div>
     </footer>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Create User Error</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class="errorModal"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -141,33 +159,107 @@
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script>
-        function validatePhone(phone){
-            return /^\d{11}$/g.test(phone) ;
-        }
-        function validEmail(email) {
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(email);
-        }
         $(document).ready(function(){
+            var contextPath = "${pageContext.request.contextPath}" ;
+            var modal = '<%= request.getParameter("error")%>' ;
+            if(modal === "e4cba4de95045a6745685f7ffd4abe1f"){
+                modal = "clear" ;
+                $(".errorModal").html("Application Requires Unique Email") ;
+                $("#exampleModal").modal("show") ;
+            }
+            if(modal === "eee914b1bc431b94c394813019227b37"){
+                modal = "clear" ;
+                $(".errorModal").html("Application Requires Unique Username") ;
+                $("#exampleModal").modal("show") ;
+            }
+            if(modal === "080a6fef808b67abeb925db7287b1c50"){
+                modal = "clear" ;
+                $(".errorModal").html("Application Requires Unique Phone Number") ;
+                $("#exampleModal").modal("show") ;
+            }
+            
+            $("#exampleModal").on("hidden.bs.modal", function(){
+                console.log("clear") ;
+                if(modal === "clear"){
+                 location.href = contextPath + "/user" ;   
+                }
+            }) ; 
+            
+            
             $("#create_user").on("submit", function(e){
                e.preventDefault() ;
                var errorMessage = "" ;
-               if(!validatePhone(document.getElementById("phone").value)){
-                   errorMessage += "Invalid Phone Number \n" ;
+               if (!(/^[0]\d{10}$/g.test($("#phone").val()))){
+                   errorMessage += "<strong style='color : red'>*</strong> Invalid Phone Number <br/>" ;
                }
-               else if(!validateEmail(document.getElementById("email").value)){
+               if (!(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g.test($("#email").val()))){
                    errorMessage += "Invalid Email \n" ;
                }
                
+               var username = document.getElementById("username") ;
+               var firstname = document.getElementById("firstname") ;
+               var lastname = document.getElementById("lastname") ;
+               var el1 = document.getElementById("password") ;
+               var el2 = document.getElementById("cpassword") ;
+                
+                if(firstname.value === "") {
+                    errorMessage += "<strong style='color : red'>*</strong> Firstname cannot be blank! <br/>" ;
+                }
+                if(lastname.value === "") {
+                    errorMessage += "<strong style='color : red'>*</strong> Lastname cannot be blank! <br/>" ;
+                }
+                if(username.value === "") {
+                    errorMessage += "<strong style='color : red'>*</strong> Username cannot be blank! <br/>" ;
+                }
+                var re = /^\w+$/;
+                if(!re.test(username.value)) {
+                    errorMessage += "<strong style='color : red'>*</strong> Username must contain only letters, numbers and underscores! <br/>" ;
+                    username.focus();
+                }
+
+                  if(el1.value !== "" && el1.value === el2.value) {
+                    if(el1.value.length < 6) {
+                      errorMessage += "<strong style='color : red'>*</strong> Password must contain at least six characters! <br/>" ;
+                      el1.focus();
+                    }
+                    if(el1.value === username.value) {
+                      errorMessage += "<strong style='color : red'>*</strong> Password must be different from Username! <br/>" ;
+                      el1.focus();
+                    }
+                    re = /[0-9]/;
+                    if(!re.test(el1.value)) {
+                      errorMessage += "<strong style='color : red'>*</strong> password must contain at least one number (0-9)! <br/>" ;
+                      el1.focus();
+                    }
+                    re = /[a-z]/;
+                    if(!re.test(el1.value)) {
+                      errorMessage += "<strong style='color : red'>*</strong> password must contain at least one lowercase letter (a-z)! <br/>" ;
+                      el1.focus();
+                    }
+                    re = /[A-Z]/;
+                    if(!re.test(el1.value)) {
+                      errorMessage += "<strong style='color : red'>*</strong> password must contain at least one uppercase letter (A-Z)! <br/>" ;
+                      el1.focus();
+                    }
+                  } else {
+                    errorMessage += "<strong style='color : red'>*</strong> Please check that you've entered and confirmed your password! <br/>" ;
+                    el1.focus();
+                  }                
                if(errorMessage.length === 0){
-                   this.submit() ;
+                    this.submit() ;
+                    return true ;
                }
                else
                {
-                   alert(errorMessage) ;
+                   $(".errorModal").html(errorMessage) ;
+                   $("#exampleModal").modal("show") ;
+                   return false ;
                }
-            });
+                
+            }) ;
         });
+
+        
     </script>
   </body>
 </html>

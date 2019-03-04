@@ -37,12 +37,12 @@
          <input type="hidden" name="id" value="${f.id}" />
          <div class="form-group">
             <label for="fooditemname">Food Item Name</label>
-            <input type="text" required name="finame"class="form-control" id="fooditemname" placeholder="Food Item Name" value="${f.finame}">
+            <input type="text" required name="finame"class="form-control" id="fooditemname" placeholder="Food Item Name" readonly value="${f.finame}">
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="fooditemquantity">Quantity</label>
-              <input type="number" min="0" name="qty"class="form-control" required id="fooditemquantity" placeholder="Quantity" readonly value="${f.qty}">
+              <input type="number" min="0" name="qty"class="form-control" required id="fooditemquantity" placeholder="Quantity" value="${f.qty}">
             </div>
             <div class="form-group col-md-6">
               <label for="price">Unit Price</label>

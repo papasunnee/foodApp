@@ -29,7 +29,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String fname, String lname, String mname, String phone, String email, String address, String username, String password, String gender, int role_id) {
+    public User(int id,  String fname, String lname, String mname, String phone, String email, String address, String username, String password, String gender, int role_id) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;

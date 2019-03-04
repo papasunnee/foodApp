@@ -5,7 +5,7 @@
  */
 package controller.user;
 
-import dao.FoodDataAccess;
+import dao.UserDataAccess;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -35,8 +35,8 @@ public class EditUser extends HttpServlet {
             throws ServletException, IOException {
         String idTemp = request.getParameter("id") ;
         int id = Integer.parseInt(idTemp) ;
-        request.setAttribute("getUserById", FoodDataAccess.getFoodById(id));
-        RequestDispatcher rd = request.getRequestDispatcher("EditFood.jsp") ;
+        request.setAttribute("getUserById", UserDataAccess.getUserById(id));
+        RequestDispatcher rd = request.getRequestDispatcher("EditUser.jsp") ;
         rd.forward(request, response);
     }
 
