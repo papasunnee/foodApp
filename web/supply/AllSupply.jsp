@@ -41,6 +41,7 @@
             <th scope="col">Food Item Name</th>
             <th scope="col">Quantity</th>
             <th scope="col">Price</th>
+            <th scope="col">Supply Date</th>
             <th scope="col">Modify</th>
           </tr>
         </thead>
@@ -52,9 +53,10 @@
                 <td>${s.finame}</td>
                 <td>${s.quantity}</td>
                 <td>${s.price}</td>
+                <td>${s.supplieraddress}</td>
                 <td><a href="edit?id=${s.id}">Edit</a> 
-<!--                    | 
-                <a href="delete?id=${s.id}">Delete</a>-->
+                    | 
+                <a href="delete?id=${s.id}">Delete</a>
                 </td>
 
             </tr>

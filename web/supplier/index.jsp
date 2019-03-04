@@ -60,6 +60,24 @@
         <span class="text-muted">Olufunmilola Oroniran</span>
       </div>
     </footer>
+     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Create User Error</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class="errorModal"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -73,6 +91,21 @@
             return /^\d{11}$/g.test(phone) ;
         }
         $(document).ready(function(){
+            var contextPath = "${pageContext.request.contextPath}" ;
+            var modal = '<%= request.getParameter("error")%>' ;
+            if(modal === "e4cba4de95045a6745685f7ffd4abe1f"){
+                modal = "clear" ;
+                $(".errorModal").html("Application Requires Unique Supplier Name") ;
+                $("#exampleModal").modal("show") ;
+            }
+            
+            $("#exampleModal").on("hidden.bs.modal", function(){
+                console.log("clear") ;
+                if(modal === "clear"){
+                 location.href = contextPath + "/supplier" ;   
+                }
+            }) ; 
+            
             $("#create_supplier").on("submit", function(e){
                e.preventDefault() ;
                if(validatePhone(document.getElementById("supplierphone").value)){

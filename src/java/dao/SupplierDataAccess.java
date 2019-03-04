@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class SupplierDataAccess {
     
-    public void addSupplier(Supplier s){
+    public int addSupplier(Supplier s){
         
         try {
                 String sql = "insert into supplier (suppliername, supplierphone, supplieraddress) values (?, ?, ?)";
@@ -30,6 +30,12 @@ public class SupplierDataAccess {
                 pst.setString(1, s.getSuppliername());
                 pst.setString(2, s.getSupplierphone());
                 pst.setString(3, s.getSupplieraddress());
+                
+                
+                String lowersupplier = s.getSuppliername().toLowerCase() ;
+                Boolean supplierExists = DBConnect.getPreparedStatement("select * from supplier where suppliername = '" + lowersupplier + "'").executeQuery().next() ;
+                if(supplierExists)
+                    return -5 ;
                 
                 pst.executeUpdate();
 //                if (value > 0) {
@@ -42,6 +48,7 @@ public class SupplierDataAccess {
              } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return 0;
     }
     
     public static List<Supplier> getAll(){

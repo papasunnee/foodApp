@@ -40,7 +40,7 @@
             <sql:query dataSource="${ds}" var="result">
                 SELECT * from fooditem;
             </sql:query>
-            <label for="fooditemname">Food Item Name</label>
+            <label for="fooditemname">Suppy Name</label>
             <select class="form-control" name="itemid">
                 <c:forEach var="row" items="${result.rows}">
                     <option value='<c:out value="${row.id}"/>'> <c:out value="${row.finame}"/> </option>

@@ -20,10 +20,7 @@ import java.util.logging.Logger;
  */
 public class UserDataAccess {
     public int addUser(User u){
-        
         try {	
-
-
                 String sql = "insert into users (fname,lname,mname,phone,email,address,username,password,gender,role_id) values (?, ?, ?, ?,?, ?, ?, ?,?, ?)";
                 PreparedStatement pst ;
                 pst = DBConnect.getPreparedStatement(sql);

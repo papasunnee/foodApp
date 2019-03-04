@@ -27,8 +27,16 @@
             Supplier s = new Supplier(0, suppliername, supplierphone, supplieraddress) ;
             
             SupplierDataAccess sd = new SupplierDataAccess() ;
-            sd.addSupplier(s);
-            String url = request.getContextPath() + "/supplier/AllSupplier" ;
+            
+            String url = request.getContextPath() + "/supplier/" ;
+            int index = sd.addSupplier(s);
+            if(index > 0){
+                url = request.getContextPath() + "/supplier/AllSupplier" ;
+                response.sendRedirect(url);
+            }else if( index == -5)
+            {
+                url = request.getContextPath() + "/supplier/?error=e4cba4de95045a6745685f7ffd4abe1f" ;
+            }
             response.sendRedirect(url);
             
         %>
