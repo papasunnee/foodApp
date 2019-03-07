@@ -40,14 +40,17 @@ public class UserDataAccess {
                 String phone = u.getPhone() ;
                 
                 Boolean emailExists = DBConnect.getPreparedStatement("select * from users where email = '" + loweremail + "'").executeQuery().next() ;
+                System.out.println(emailExists + "-5");
                 if(emailExists)
                     return -5 ;
                 
                 Boolean unameExists = DBConnect.getPreparedStatement("select * from users where username = '" + loweruname + "'").executeQuery().next() ;
+                System.out.println(unameExists + "-6");
                 if(unameExists)
                     return -6 ;
                 
                 Boolean phoneExists = DBConnect.getPreparedStatement("select * from users where phone = '" + phone + "'").executeQuery().next() ;
+                System.out.println(phoneExists + "-7");
                 if(phoneExists)
                     return -7 ;
                 

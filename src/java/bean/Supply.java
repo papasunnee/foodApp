@@ -24,7 +24,7 @@ public class Supply {
     private String description ;
     private String supplierphone ;
     private String supplieraddress ;
-    private String supply_date ;
+    private String supplydate ;
 
 
     public Supply() {
@@ -48,7 +48,7 @@ public class Supply {
         this.suppliername = suppliername;
     }
     
-    public Supply(int id, int itemid, int quantity, double price, int supplierid, String finame, String description, String suppliername, String supply_date) {
+    public Supply(int id, int itemid, int quantity, double price, int supplierid, String finame, String description, String suppliername, String supplydate) {
         this.id = id;
         this.itemid = itemid;
         this.quantity = quantity;
@@ -57,7 +57,7 @@ public class Supply {
         this.suppliername = suppliername;
         this.finame = finame;
         this.description = description;
-        this.supply_date = supply_date ;
+        this.supplydate = supplydate ;
     }
     
     public Supply(int id, int itemid, int quantity, double price, int supplierid, String finame, String description, String suppliername) {
@@ -72,7 +72,7 @@ public class Supply {
     }
     
     
-    public Supply(int id, int itemid, int quantity, double price, int supplierid, String finame, String description, String suppliername,  String supplierphone, String supplieraddress, String supply_date) {
+    public Supply(int id, int itemid, int quantity, double price, int supplierid, String finame, String description, String suppliername,  String supplierphone, String supplieraddress, String supplydate) {
         this.id = id;
         this.itemid = itemid;
         this.quantity = quantity;
@@ -83,7 +83,7 @@ public class Supply {
         this.description = description;
         this.supplierphone = supplierphone;
         this.supplieraddress = supplieraddress;
-        this.supply_date = supply_date;
+        this.supplydate = supplydate;
     }
 
     public String getFiname() {
@@ -175,10 +175,10 @@ public class Supply {
     } 
     
     public String getSupplyDate() {
-        return supply_date;
+        return supplydate;
     }
 
-    public void setSupplyDate(String supply_date) {
-        this.supply_date = supply_date;
+    public void setSupplyDate(String supplydate) {
+        this.supplydate = supplydate;
     } 
 }

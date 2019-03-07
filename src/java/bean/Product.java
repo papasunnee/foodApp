@@ -7,7 +7,7 @@ package bean;
 
 /**
  *
- * @author Adetona Sunday
+ * @author Funmilola
  */
 public class Product {
 

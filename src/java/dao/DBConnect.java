@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Adetona Sunday
+ * @author Funmilola
  */
 public class DBConnect {
     

@@ -53,7 +53,7 @@
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Total Cost</th>
-                <th><a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Person"><span class="glyphicon glyphicon-plus">save</span></a></th>
+                <th><a class="btn btn-secondary" href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Person"><span class="glyphicon glyphicon-plus">Add Item</span></a></th>
             </tr>
             <tr>
                 <td>
@@ -64,7 +64,7 @@
                             </c:forEach>
                     </select>
                 </td>
-                <td><input type="number" min="0" name="quantity" id="quantity" class="form-control"></td>
+                <td><input type="number" min="0" name="quantity" id="quantity" class="form-control" oninput="this.value = Math.abs(this.value)"></td>
                 <td><input type="text" name="price" id="price" class="form-control" readonly value="0"/></td>
                 <td><input type="text" name="totalprice" id="totalprice" class="form-control" readonly value="0"/></td>
                 <td></td>
@@ -96,6 +96,7 @@
 <script>
 $(function(){
     var sales = [] ;
+    $("#quantity").attr("disabled", true) ;      
     $('#addMore').on('click', function() {
 //              var data = $("#tb tr:eq(1)").clone(true).appendTo("#tb");
 //              data.find("input").val('');
@@ -103,7 +104,7 @@ $(function(){
                 var p = $("input#price").val() ;
                 var tp =$("input#totalprice").val() ;
                 var dl = $("select").find('option:selected').data("label") ;
-                if($("select").val() < 0 || p === 0 || tp === 0 || isNaN(tp)){
+                if($("select").val() < 0 || p == 0 || tp == 0 || isNaN(tp) || p == null){
                     alert("Please Input all necessary values") ;
                 }else{
                     let detail = {
@@ -131,6 +132,13 @@ $(function(){
      });
      
       $("select").on("change", function(e){
+          if($(this).val() == -1){
+              $("#quantity").attr("disabled", "true") ;
+          }else
+          {
+              $("#quantity").removeAttr("disabled") ;
+          }
+console.log($(this).val()) ;
             var price = $(this).find('option:selected').data("price") ;
             $("input#price").val(price) ;
             $("input#totalprice").val(0) ;
@@ -138,6 +146,26 @@ $(function(){
       });
       
       $("#quantity").on("change", function(e){
+            var quantity = $("select").find('option:selected').data("quantity") ;
+            if($(this).val()=== null){
+                $("input#totalprice").val(0) ;
+                $("input#quantity").val(0) ;
+            }
+            else if($(this).val() > quantity){
+                alert("Product Quantity Insufficient") ;
+                $("input#totalprice").val(0) ;
+                $("input#quantity").val(null) ;
+            }
+            else
+            {
+                var price = $("select").find('option:selected').data("price") ;
+                 var qty = $("input#quantity").val() ;
+                $("input#totalprice").val(price*qty) ;
+            }
+      });
+      
+      
+      $("#quantity").on("keyup", function(e){
             var quantity = $("select").find('option:selected').data("quantity") ;
             if($(this).val()== null){
                 $("input#totalprice").val(0) ;

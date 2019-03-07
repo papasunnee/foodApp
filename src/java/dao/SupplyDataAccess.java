@@ -51,11 +51,12 @@ public class SupplyDataAccess {
     public static List<Supply> getAll(){
         List<Supply> ls = new LinkedList<>() ;
         try {
-            ResultSet rs = DBConnect.getPreparedStatement("select supply.id,itemid,supply.quantity,supply.price,supplierid,finame,description, suppliername, supplierphone, supplieraddress, supply_date from supply join fooditem on fooditem.id = supply.itemid join supplier on supplier.id = supply.supplierid order by supply.id DESC").executeQuery() ;
+            ResultSet rs = DBConnect.getPreparedStatement("select supply.id,itemid,supply.quantity,supply.price,supplierid,finame,description, suppliername, supplierphone, supplieraddress, supplydate from supply join fooditem on fooditem.id = supply.itemid join supplier on supplier.id = supply.supplierid order by supply.id DESC").executeQuery() ;
             int i = 0 ;
             while(rs.next()){
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");  
-                Supply s = new Supply(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10),dateFormat.format(rs.getDate(11)));
+                String strDate = dateFormat.format(rs.getDate(11));  
+                Supply s = new Supply(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), strDate);
                 //Supply s = new Supply(rs.getInt(1), rs.getString(2).toUpperCase(), rs.getString(3), rs.getString(4)) ;
                 ls.add(s) ;
             }
