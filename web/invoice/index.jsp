@@ -43,19 +43,19 @@
               out.println(session.getAttribute("username")) ;
           %>
       </h6>
-      <sql:query dataSource="${ds}" var="myresult">
-            SELECT * from users;
-      </sql:query>
-     <form class="form-inline" action="${pageContext.request.contextPath}/invoice/AllInvoice" method="post">
-        <label for="invoiceoption" class="mr-sm-2">Select Invoice to View</label>
-        <select class="form-control mb-2 mr-sm-2">
-            <option value="-1">All</option>
-            <c:forEach var="row" items="${myresult.rows}">
-                <option value='<c:out value="${row.id}"/>' > <c:out value="${row.fname} ${row.lname}"/> </option>
-            </c:forEach>
-        </select>
-        <button type="submit" class="btn btn-primary mb-2">Submit</button>
-      </form>
+         <sql:query dataSource="${ds}" var="myresult">
+                SELECT * from users;
+          </sql:query>
+         <form class="form-inline" action="${pageContext.request.contextPath}/invoice/AllInvoice" method="post">
+            <label for="invoiceoption" class="mr-sm-2">Select Invoice to View</label>
+            <select class="form-control mb-2 mr-sm-2">
+                <option value="-1">All</option>
+                <c:forEach var="row" items="${myresult.rows}">
+                    <option value='<c:out value="${row.id}"/>' > <c:out value="${row.fname} ${row.lname}"/> </option>
+                </c:forEach>
+            </select>
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+        </form>
       <form name="create_supply" action="${pageContext.request.contextPath}/supply/ManageAddInvoice.jsp" method="get">
         <sql:query dataSource="${ds}" var="result">
             SELECT * from fooditem;
@@ -112,7 +112,9 @@ $(function(){
                 var qty = $("input#quantity").val() ;
                 var p = $("input#price").val() ;
                 var tp =$("input#totalprice").val() ;
-                var dl = $("select").find('option:selected').data("label") ;
+                var dl = $("select").find('option:selected')[1].dataset.label;
+                console.log(dl) ;
+                alert($("select").val()) ;
                 if($("select").val() < 0 || p == 0 || tp == 0 || isNaN(tp) || p == null){
                     alert("Please Input all necessary values") ;
                 }else{
@@ -179,15 +181,15 @@ console.log($(this).val()) ;
             }
             else
             {
-                var price = $("select").find('option:selected').data("price") ;
+//                var price = $("select").find('option:selected').data("price") ;
+                  var price = $("select").find('option:selected')[1].dataset.price;
                  var qty = $("input#quantity").val() ;
-                $("input#totalprice").val(price*qty) ;
+                $("input#totalprice").val(parseFloat(price)*qty) ;
             }
       });
       
       
       $("#quantity").on("keyup", function(e){
-          alert(23) ;
             var quantity = $("select").find('option:selected').data("quantity") ;
             if($(this).val()== null){
                 $("input#totalprice").val(0) ;
@@ -200,9 +202,9 @@ console.log($(this).val()) ;
             }
             else
             {
-                var price = $("select").find('option:selected').data("price") ;
+                var price = $("select").find('option:selected')[1].dataset.price;
                  var qty = $("input#quantity").val() ;
-                $("input#totalprice").val(price*qty) ;
+                $("input#totalprice").val(parseFloat(price)*qty) ;
             }
       });
 });      
