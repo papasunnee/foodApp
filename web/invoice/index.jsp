@@ -113,10 +113,12 @@ $(function(){
                 var p = $("input#price").val() ;
                 var tp =$("input#totalprice").val() ;
                 var dl = $("select").find('option:selected')[1].dataset.label;
+                var item_id = $("select").find('option:selected')[1].value ;
                 if( p == 0 || tp == 0 || isNaN(tp) || p == null){
                     alert("Please Input all necessary values") ;
                 }else{
                     let detail = {
+                        id : item_id,
                         price : p,
                         quantity : qty,
                         totalprice : tp,

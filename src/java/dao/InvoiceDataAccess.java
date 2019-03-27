@@ -7,7 +7,6 @@ package dao;
 
 
 import bean.Invoice;
-import controller.InvoiceDesc;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 /**
@@ -33,16 +33,16 @@ public class InvoiceDataAccess {
                 pst.setString(1, i.getInvoice_detail());
                 pst.setInt(2, i.getUser_id());
                 pst.executeUpdate();
-                String withoutFirstCharacter = i.getInvoice_detail().substring(1);
-                String withoutLastCharacter = withoutFirstCharacter.substring(0, withoutFirstCharacter.length() - 1);
-                 try {
-                    JSONObject jsonObject = new JSONObject(withoutLastCharacter);
-                    int objectLength = jsonObject.length() ;
-                    System.out.println(objectLength);
-                } catch (JSONException ex) {
-                    Logger.getLogger(InvoiceDataAccess.class.getName()).log(Level.SEVERE, null, ex);
-                }
-             } catch (SQLException | ClassNotFoundException ex) {
+                    JSONArray jsonArray = new JSONArray(i.getInvoice_detail());
+                    for(int j=0;j<jsonArray.length();j++)
+                    {
+                        JSONObject jsonObject = jsonArray.getJSONObject(j);
+                        FoodDataAccess fd = new FoodDataAccess() ;
+                        int id = Integer.parseInt(jsonObject.optString("id")) ;
+                        int quantity = Integer.parseInt(jsonObject.optString("quantity")) ;
+                        fd.updateFoodItemRecord(id, quantity);
+                    }
+             } catch (SQLException | ClassNotFoundException | JSONException ex) {
             Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;

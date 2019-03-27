@@ -98,6 +98,30 @@ public class FoodDataAccess {
         
     }
     
+    public void updateFoodItemRecord(int id, int purchasedQty){
+        String sql = "select * from fooditem where id = " + id ;
+        int quantity = 0 ;
+        try {
+            ResultSet rs = DBConnect.getPreparedStatement(sql).executeQuery() ;
+            while(rs.next()){
+                Food f = new Food(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4), rs.getString(5)) ;
+                quantity = f.getQty() ;
+            }
+        //sql = "update fooditem set quantity = ? , price = ? where id = " + id ; 
+        sql = "update fooditem set quantity = ?  where id = " + id ; 
+        PreparedStatement  ps ;
+        int newQty = quantity - purchasedQty ;
+        ps = DBConnect.getPreparedStatement(sql) ;
+        ps.setInt(1, newQty);
+        ps.executeUpdate() ;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    
+    
     public void edit(int id, String finame, double price, int qty, String description){
        
         try {
