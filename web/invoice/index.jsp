@@ -115,7 +115,7 @@ $(function(){
                 var dl = $("select").find('option:selected')[1].dataset.label;
                 console.log(dl) ;
                 alert($("select").val()) ;
-                if($("select").val() < 0 || p == 0 || tp == 0 || isNaN(tp) || p == null){
+                if( p == 0 || tp == 0 || isNaN(tp) || p == null){
                     alert("Please Input all necessary values") ;
                 }else{
                     let detail = {
