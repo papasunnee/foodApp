@@ -113,8 +113,6 @@ $(function(){
                 var p = $("input#price").val() ;
                 var tp =$("input#totalprice").val() ;
                 var dl = $("select").find('option:selected')[1].dataset.label;
-                console.log(dl) ;
-                alert($("select").val()) ;
                 if( p == 0 || tp == 0 || isNaN(tp) || p == null){
                     alert("Please Input all necessary values") ;
                 }else{
@@ -125,7 +123,6 @@ $(function(){
                         fooditem : dl
                     } ;
                     sales.push(detail) ;
-                    console.log("sales", sales) ;
                     var total = 0 ;
                     var text = "<table  class='table table-hover small-text'>" ;
                     text += sales.map(function(sale){
@@ -161,15 +158,14 @@ $(function(){
           {
               $("#quantity").removeAttr("disabled") ;
           }
-console.log($(this).val()) ;
-            var price = $(this).find('option:selected').data("price") ;
+            var price = $("select").find('option:selected')[1].dataset.price;
             $("input#price").val(price) ;
             $("input#totalprice").val(0) ;
             $("input#quantity").val(null) ;
       });
       
       $("#quantity").on("change", function(e){
-            var quantity = $("select").find('option:selected').data("quantity") ;
+            var quantity = $("select").find('option:selected')[1].dataset.quantity ;
             if($(this).val()=== null){
                 $("input#totalprice").val(0) ;
                 $("input#quantity").val(0) ;
@@ -190,7 +186,7 @@ console.log($(this).val()) ;
       
       
       $("#quantity").on("keyup", function(e){
-            var quantity = $("select").find('option:selected').data("quantity") ;
+            var quantity = $("select").find('option:selected')[1].dataset.quantity ;
             if($(this).val()== null){
                 $("input#totalprice").val(0) ;
                 $("input#quantity").val(0) ;
