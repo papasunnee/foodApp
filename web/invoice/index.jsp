@@ -166,6 +166,7 @@ $(function(){
       
       $("#quantity").on("change", function(e){
             var quantity = $("select").find('option:selected')[1].dataset.quantity ;
+            console.log($(this).val() , quantity) ;
             if($(this).val()=== null){
                 $("input#totalprice").val(0) ;
                 $("input#quantity").val(0) ;
