@@ -9,7 +9,7 @@ import java.sql.Date;
 
 /**
  *
- * @author Sunday
+ * @author Funmilola
  */
 public class Invoice {
     

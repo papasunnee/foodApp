@@ -142,8 +142,11 @@ $(function(){
       $('#createInvoice').on('click', function() {
           if(sales.length > 0){
            $.post("${pageContext.request.contextPath}/invoice/ManageAddInvoice.jsp",{invoice_detail : JSON.stringify(sales)} ,function(data, status){
-            alert("Data: " + data + "\nStatus: " + status);
             sales = [] ;
+            if(status == "success"){ 
+                alert("Invoice Successfully Created") ;
+                location.href = "${pageContext.request.contextPath}/invoice/index.jsp" ;
+            }
           });
         } 
         else{

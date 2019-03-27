@@ -51,7 +51,7 @@
                 <td>${i.invoice_detail}</td>
                 <td>${i.user_id}</td>
                 <td>${i.date_created}</td>
-                <td><a href="edit?id=${s.id}">View</a> | 
+                <td><a href="viewInvoice?id=${i.id}">View</a> | 
                 <a href="delete?id=${s.id}">Delete</a></td>
 
             </tr>

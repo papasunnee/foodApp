@@ -7,7 +7,7 @@ package dao;
 
 
 import bean.Invoice;
-import bean.Supplier;
+import controller.InvoiceDesc;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 /**
  *
  * @author Funmilola
@@ -30,15 +32,16 @@ public class InvoiceDataAccess {
                 pst = DBConnect.getPreparedStatement(sql);
                 pst.setString(1, i.getInvoice_detail());
                 pst.setInt(2, i.getUser_id());
-                
                 pst.executeUpdate();
-//                if (value > 0) {
-//                    request.getSession().setAttribute("sm", "Food Item Saved Successfully");
-//                } else {
-//                    request.getSession().setAttribute("em", "Food Item not saved");
-//                }
-//
-//                request.getRequestDispatcher("/createFoodItem.jsp").forward(request, response);
+                String withoutFirstCharacter = i.getInvoice_detail().substring(1);
+                String withoutLastCharacter = withoutFirstCharacter.substring(0, withoutFirstCharacter.length() - 1);
+                 try {
+                    JSONObject jsonObject = new JSONObject(withoutLastCharacter);
+                    int objectLength = jsonObject.length() ;
+                    System.out.println(objectLength);
+                } catch (JSONException ex) {
+                    Logger.getLogger(InvoiceDataAccess.class.getName()).log(Level.SEVERE, null, ex);
+                }
              } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -55,7 +58,7 @@ public class InvoiceDataAccess {
                 ls.add(inv) ;
             }
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InvoiceDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ls;
     } 
@@ -70,7 +73,7 @@ public class InvoiceDataAccess {
                 ls.add(inv) ;
             }
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InvoiceDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ls;
     }
@@ -98,7 +101,7 @@ public class InvoiceDataAccess {
             ps.setInt(1, id);
             ps.executeUpdate() ;
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InvoiceDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

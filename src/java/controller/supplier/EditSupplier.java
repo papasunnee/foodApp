@@ -35,7 +35,7 @@ public class EditSupplier extends HttpServlet {
             throws ServletException, IOException {
         String idTemp = request.getParameter("id") ;
         int id = Integer.parseInt(idTemp) ;
-        request.setAttribute("getSupplierById", SupplierDataAccess.getSupplierById(id));
+        request.setAttribute("getInvoiceById", SupplierDataAccess.getSupplierById(id));
         RequestDispatcher rd = request.getRequestDispatcher("EditSupplier.jsp") ;
         rd.forward(request, response);
     }
