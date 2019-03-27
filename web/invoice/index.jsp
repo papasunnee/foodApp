@@ -33,7 +33,7 @@
     <!-- Begin page content -->
     <main role="main" class="container">
       <h1 class="mt-5">Create New Invoice</h1>
-      <h6 class="text-success">
+      <h6 class="text-success" style="float : right">
           <span class="text-muted">
               <%
                 out.println(session.getAttribute("user_type")) ;
@@ -43,6 +43,19 @@
               out.println(session.getAttribute("username")) ;
           %>
       </h6>
+      <sql:query dataSource="${ds}" var="myresult">
+            SELECT * from users;
+      </sql:query>
+     <form class="form-inline" action="${pageContext.request.contextPath}/invoice/AllInvoice" method="post">
+        <label for="invoiceoption" class="mr-sm-2">Select Invoice to View</label>
+        <select class="form-control mb-2 mr-sm-2">
+            <option value="-1">All</option>
+            <c:forEach var="row" items="${myresult.rows}">
+                <option value='<c:out value="${row.id}"/>' > <c:out value="${row.fname} ${row.lname}"/> </option>
+            </c:forEach>
+        </select>
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+      </form>
       <form name="create_supply" action="${pageContext.request.contextPath}/supply/ManageAddInvoice.jsp" method="get">
         <sql:query dataSource="${ds}" var="result">
             SELECT * from fooditem;
@@ -74,15 +87,11 @@
                 
             </div>
 
-        <button type="button" name="insert" class="btn btn-success">Create Invoice</button>
+        <button type="button" name="createInvoice" id="createInvoice" class="btn btn-success">Create Invoice</button>
       </form>
     </main>
-
-    <footer class="footer">
-      <div class="container">
-        <span class="text-muted">Olufunmilola Oroniran</span>
-      </div>
-    </footer>
+        
+    <jsp:include page="/footer.jsp" />
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -114,7 +123,7 @@ $(function(){
                         fooditem : dl
                     } ;
                     sales.push(detail) ;
-                    console.log(sales) ;
+                    console.log("sales", sales) ;
                     var total = 0 ;
                     var text = "<table  class='table table-hover small-text'>" ;
                     text += sales.map(function(sale){
@@ -130,6 +139,18 @@ $(function(){
                     $("select").val(-1);
                 }
      });
+     
+      $('#createInvoice').on('click', function() {
+          if(sales.length > 0){
+           $.post("${pageContext.request.contextPath}/invoice/ManageAddInvoice.jsp",{invoice_detail : JSON.stringify(sales)} ,function(data, status){
+            alert("Data: " + data + "\nStatus: " + status);
+            sales = [] ;
+          });
+        } 
+        else{
+            alert('Add an item to the list') ;
+        }
+      }) ;
      
       $("select").on("change", function(e){
           if($(this).val() == -1){
@@ -166,6 +187,7 @@ console.log($(this).val()) ;
       
       
       $("#quantity").on("keyup", function(e){
+          alert(23) ;
             var quantity = $("select").find('option:selected').data("quantity") ;
             if($(this).val()== null){
                 $("input#totalprice").val(0) ;

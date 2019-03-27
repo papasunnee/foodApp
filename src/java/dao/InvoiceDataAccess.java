@@ -6,6 +6,7 @@
 package dao;
 
 
+import bean.Invoice;
 import bean.Supplier;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,28 +15,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 /**
  *
  * @author Funmilola
  */
-public class SupplierDataAccess {
+public class InvoiceDataAccess {
     
-    public int addSupplier(Supplier s){
+    
+    public int addInvoice(Invoice i){
         
         try {
-                String sql = "insert into supplier (suppliername, supplierphone, supplieraddress) values (?, ?, ?)";
+                String sql = "insert into invoice (invoice_detail, user_id) values (?, ?)";
                 PreparedStatement pst ;
                 pst = DBConnect.getPreparedStatement(sql);
-                pst.setString(1, s.getSuppliername());
-                pst.setString(2, s.getSupplierphone());
-                pst.setString(3, s.getSupplieraddress());
-                
-                
-                String lowersupplier = s.getSuppliername().toLowerCase() ;
-                Boolean supplierExists = DBConnect.getPreparedStatement("select * from supplier where suppliername = '" + lowersupplier + "'").executeQuery().next() ;
-                if(supplierExists)
-                    return -5 ;
+                pst.setString(1, i.getInvoice_detail());
+                pst.setInt(2, i.getUser_id());
                 
                 pst.executeUpdate();
 //                if (value > 0) {
@@ -51,14 +45,14 @@ public class SupplierDataAccess {
         return 0;
     }
     
-    public static List<Supplier> getAll(){
-        List<Supplier> ls = new LinkedList<>() ;
+    public static List<Invoice> getAll(){
+        List<Invoice> ls = new LinkedList<>() ;
         try {
-            ResultSet rs = DBConnect.getPreparedStatement("select * from supplier").executeQuery() ;
+            ResultSet rs = DBConnect.getPreparedStatement("select * from invoice").executeQuery() ;
             int i = 0 ;
             while(rs.next()){
-                Supplier s = new Supplier(rs.getInt(1), rs.getString(2).toUpperCase(), rs.getString(3), rs.getString(4)) ;
-                ls.add(s) ;
+                Invoice inv = new Invoice(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDate(4)) ;
+                ls.add(inv) ;
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,14 +60,14 @@ public class SupplierDataAccess {
         return ls;
     } 
     
-    public static List<Supplier> getSupplierById(int id){
-        List<Supplier> ls = new LinkedList<>() ;
-        String sql = "select * from supplier where id = " + id ;
+    public static List<Invoice> getInvoiceById(int id){
+        List<Invoice> ls = new LinkedList<>() ;
+        String sql = "select * from invoice where id = " + id ;
         try {
             ResultSet rs = DBConnect.getPreparedStatement(sql).executeQuery() ;
             while(rs.next()){
-                Supplier s = new Supplier(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)) ;
-                ls.add(s) ;
+                Invoice inv = new Invoice(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDate(4)) ;
+                ls.add(inv) ;
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,24 +75,24 @@ public class SupplierDataAccess {
         return ls;
     }
     
-    public void edit(int id, String suppliername, String supplierphone, String supplieraddress){
-       
-        try {
-            String sql = "update supplier set suppliername = ? , supplierphone = ? , supplieraddress = ? where id = ? " ;
-            PreparedStatement  ps ;
-            ps = DBConnect.getPreparedStatement(sql);
-            ps.setString(1, suppliername);
-            ps.setString(2, supplierphone);
-            ps.setString(3, supplieraddress); 
-            ps.setInt(4, id);
-            int d = ps.executeUpdate() ;
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public void edit(int id, String invoice_detail, int user_id, Date date_created){
+//       
+//        try {
+//            String sql = "update invoice set invoice_detail = ? , user_id = ? , date_created = ? where id = ? " ;
+//            PreparedStatement  ps ;
+//            ps = DBConnect.getPreparedStatement(sql);
+//            ps.setString(1, suppliername);
+//            ps.setString(2, supplierphone);
+//            ps.setString(3, supplieraddress); 
+//            ps.setInt(4, id);
+//            int d = ps.executeUpdate() ;
+//        } catch (ClassNotFoundException | SQLException ex) {
+//            Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
     
     public void delete(int id){
-        String sql = "delete from supplier where id = ? " ;
+        String sql = "delete from invoice where id = ? " ;
         try {
             PreparedStatement ps = DBConnect.getPreparedStatement(sql) ;
             ps.setInt(1, id);

@@ -4,6 +4,8 @@
     Author     : Funmilola
 --%>
 
+<%@page import="dao.InvoiceDataAccess"%>
+<%@page import="bean.Invoice"%>
 <%@page import="dao.FoodDataAccess"%>
 <%@page import="dao.SupplyDataAccess"%>
 <%@page import="bean.Supply"%>
@@ -12,25 +14,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add User Manager</title>
+        <title>Add Invoice</title>
     </head>
     <body>
     <%
             if(session.getAttribute("username") == null){
                 response.sendRedirect(request.getContextPath());
             }   
-            int itemid = Integer.parseInt(request.getParameter("itemid"));
-            int supplierid = Integer.parseInt(request.getParameter("supplierid"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            double price = Double.parseDouble(request.getParameter("price"));
-            
-            Supply s = new Supply(0, itemid, quantity, price, supplierid) ;
-            
-            SupplyDataAccess sd = new SupplyDataAccess() ;
-            sd.addSupply(s);
-            FoodDataAccess fd = new FoodDataAccess() ;
-            fd.updateFoodQuantity(itemid , quantity, price) ;
-            String url = request.getContextPath() + "/supply/AllSupply" ;
+            System.out.println(request.getParameter("invoice_detail")) ;
+            String invoice_detail = request.getParameter("invoice_detail");
+            Invoice inv = new Invoice(0, invoice_detail, 1) ;
+            InvoiceDataAccess invd = new InvoiceDataAccess() ;
+            invd.addInvoice(inv) ;
+            String url = request.getContextPath() + "/invoice/AllInvoice" ;
             response.sendRedirect(url);
             
         %>

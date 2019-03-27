@@ -1,4 +1,6 @@
-<% 
+<%
+    int timeout = session.getMaxInactiveInterval();
+    response.setHeader("Refresh", timeout + "; URL = index.jsp");
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 %>
 

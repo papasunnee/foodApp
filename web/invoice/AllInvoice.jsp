@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Supplier List :: FoodStore App</title>
+    <title>All Invoice :: FoodStore App</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/sticky-footer-navbar.css" rel="stylesheet">
   </head>
@@ -31,27 +31,27 @@
 
     <!-- Begin page content -->
     <main role="main" class="container">
-      <h1 class="mt-5">List of Suppliers</h1>
+      <h1 class="mt-5">List of All Invoices</h1>
       <a href="index.jsp" name="add_new_supplier" class="mt-3 mb-3 btn btn-success">
-          Add New Supplier</a>
+          Create New Invoice</a>
       <table class="table table-hover">
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope="col">Supplier's Name</th>
-            <th scope="col">Supplier's Phone</th>
-            <th scope="col">Supplier's Address</th>
-            <th scope="col">Modify</th>
+            <th scope="col">Invoice Detail</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Invoice Date</th>
+            <th scope="col">View</th>
           </tr>
         </thead>
         <tbody>
-            <c:forEach items="${AllSupplier}" var="s">
+            <c:forEach items="${AllInvoice}" var="i">
                 <tr>
-                <th scope="row">${s.id}</th>
-                <td>${s.suppliername}</td>
-                <td>${s.supplierphone}</td>
-                <td>${s.supplieraddress}</td>
-                <td><a href="edit?id=${s.id}">Edit</a> | 
+                <th scope="row">${i.id}</th>
+                <td>${i.invoice_detail}</td>
+                <td>${i.user_id}</td>
+                <td>${i.date_created}</td>
+                <td><a href="edit?id=${s.id}">View</a> | 
                 <a href="delete?id=${s.id}">Delete</a></td>
 
             </tr>

@@ -109,7 +109,7 @@
                 <div class="wthree-field">
                     <input id="saveForm" name="login" type="submit" value="sign in" />
                 </div>
-                <ul class="list-login">
+<!--                <ul class="list-login">
                     <li class="switch-agileits">
                         <label class="switch">
                             <input type="checkbox">
@@ -121,7 +121,7 @@
                         <a href="#" class="text-right">forgot password?</a>
                     </li>
                     <li class="clearfix"></li>
-                </ul>
+                </ul>-->
             </form>
         </div>
     </div>
