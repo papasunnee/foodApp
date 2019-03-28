@@ -46,22 +46,28 @@
          <sql:query dataSource="${ds}" var="myresult">
                 SELECT * from users;
           </sql:query>
-         <form class="form-inline" action="${pageContext.request.contextPath}/invoice/AllInvoice" method="post">
-             <input type="hidden" value="<%= session.getAttribute("user_id") %>" />
-              <%
-                if((int)session.getAttribute("user_role_id") < 2){
-              %>
+         <form name="invoice_form" class="form-inline" action="AllInvoice" method="post">
+             <input type="hidden" name="currentUserId" value="<%= session.getAttribute("user_id") %>" />
+             
               <label for="invoiceoption" class="mr-sm-2">Select Invoice to View</label>
-              <select class="form-control mb-2 mr-sm-2">
-                <option value="-1">All</option>
+              <select name="invoiceoption" class="form-control mb-2 mr-sm-2">
+                 <%
+                    if((int)session.getAttribute("user_role_id") < 2){
+                 %>
+                    <option value="-1">All</option>
                 
-                <c:forEach var="row" items="${myresult.rows}">
-                    <option value='<c:out value="${row.id}"/>' > <c:out value="${row.fname} ${row.lname}"/> </option>
-                </c:forEach>
+                    <c:forEach var="row" items="${myresult.rows}">
+                        <option value='<c:out value="${row.id}"/>' > <c:out value="${row.fname} ${row.lname}"/> </option>
+                    </c:forEach>
+                    <%
+                        } else {
+                    %>
+                    <option value="<%= session.getAttribute("user_id") %>">Personal</option>
+                    <%
+                        } 
+                    %>
               </select>
-            <%
-               } 
-            %>
+            
             <button type="submit" class="btn btn-success mb-2">View Invoices</button>
         </form>
       <form name="create_supply" action="${pageContext.request.contextPath}/supply/ManageAddInvoice.jsp" method="get">
@@ -81,7 +87,7 @@
                     <select name="designation" class="form-control">
                         <option value="-1" name="itemid" selected>Select Food Item</option>
                             <c:forEach var="row" items="${result.rows}">
-                                <option value='<c:out value="${row.id}"/>' data-price='<c:out value="${row.price}"/>' data-label='<c:out value="${row.finame}"/>' data-quantity='<c:out value="${row.quantity}"/>'> <c:out value="${row.finame}-(${row.quantity})"/> </option>
+                                <option value='<c:out value="${row.id}"/>' <c:if test = "${row.quantity == 0}">disabled</c:if>  data-price='<c:out value="${row.price}"/>' data-label='<c:out value="${row.finame}"/>' data-quantity='<c:out value="${row.quantity}"/>'> <c:out value="${row.finame}-(${row.quantity})"/> </option>
                             </c:forEach>
                     </select>
                 </td>
@@ -179,7 +185,6 @@ $(function(){
       
       $("#quantity").on("change", function(e){
             var quantity = $("select").find('option:selected')[1].dataset.quantity ;
-            console.log($(this).val() , quantity) ;
             if($(this).val()=== null){
                 $("input#totalprice").val(0) ;
                 $("input#quantity").val(0) ;

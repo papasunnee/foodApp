@@ -48,16 +48,6 @@
         if(username!=null){
             response.sendRedirect( request.getContextPath() + "/fooditem");
         }
-//        String status=request.getParameter("status");
-//        
-//        if(status!=null){
-//            if(status.equals("false")){
-//                   out.print("Incorrect login details!");                       
-//            }
-//            else{
-//                out.print("Some error occurred!");
-//            }
-//        }
         %>
     <h1 class="title-agile text-center">Food Store App</h1>
     <div class="content-w3ls">
@@ -109,19 +99,6 @@
                 <div class="wthree-field">
                     <input id="saveForm" name="login" type="submit" value="sign in" />
                 </div>
-<!--                <ul class="list-login">
-                    <li class="switch-agileits">
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider round"></span>
-                            keep signed in
-                        </label>
-                    </li>
-                    <li>
-                        <a href="#" class="text-right">forgot password?</a>
-                    </li>
-                    <li class="clearfix"></li>
-                </ul>-->
             </form>
         </div>
     </div>
@@ -131,6 +108,5 @@
         </p>
     </div>
 </body>
-<!-- //Body -->
 </html>
 

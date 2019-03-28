@@ -48,10 +48,14 @@ public class InvoiceDataAccess {
         return 0;
     }
     
-    public static List<Invoice> getAll(){
+    public static List<Invoice> getAllByUserId(int id){
         List<Invoice> ls = new LinkedList<>() ;
         try {
-            ResultSet rs = DBConnect.getPreparedStatement("select * from invoice").executeQuery() ;
+            String sql = "select * from invoice" ;
+            if (id > 0){
+                sql= "select * from invoice where user_id = " + id ;
+            }
+            ResultSet rs = DBConnect.getPreparedStatement(sql).executeQuery() ;
             int i = 0 ;
             while(rs.next()){
                 Invoice inv = new Invoice(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDate(4)) ;

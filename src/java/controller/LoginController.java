@@ -44,6 +44,7 @@ public class LoginController extends HttpServlet {
             User user = new User();
             user.setUsername(request.getParameter("username"));
             user.setPassword(request.getParameter("password"));
+            System.out.println(request.getParameter("password")) ;
             String username = request.getParameter("username").toLowerCase();
             String password= request.getParameter("password");
             

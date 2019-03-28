@@ -34,7 +34,12 @@ public class AllInvoice extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         request.setAttribute("AllInvoice", InvoiceDataAccess.getAll());
+        PrintWriter out = response.getWriter();
+        
+         int invoiceoption = -1 ;
+         invoiceoption = Integer.parseInt(request.getParameter("invoiceoption")) ;
+         System.out.println(invoiceoption + " " + "popo") ;
+         request.setAttribute("AllInvoice", InvoiceDataAccess.getAllByUserId(invoiceoption));
         RequestDispatcher rd = request.getRequestDispatcher("/invoice/AllInvoice.jsp") ;
         rd.forward(request, response); 
     }

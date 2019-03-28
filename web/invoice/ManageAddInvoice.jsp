@@ -21,9 +21,10 @@
             if(session.getAttribute("username") == null){
                 response.sendRedirect(request.getContextPath());
             }   
-            System.out.println(request.getParameter("invoice_detail") + " invoice_detail") ;
+            int user_id = (int)session.getAttribute("user_id") ;
+            System.out.println(request.getParameter("invoice_detail") + " invoice_detailp") ;
             String invoice_detail = request.getParameter("invoice_detail");
-            Invoice inv = new Invoice(0, invoice_detail, 1) ;
+            Invoice inv = new Invoice(0, invoice_detail, user_id) ;
             InvoiceDataAccess invd = new InvoiceDataAccess() ;
             invd.addInvoice(inv) ;
             String url = request.getContextPath() + "/invoice/AllInvoice" ;
