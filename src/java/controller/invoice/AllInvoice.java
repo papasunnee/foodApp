@@ -36,10 +36,9 @@ public class AllInvoice extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         
-         int invoiceoption = -1 ;
-         invoiceoption = Integer.parseInt(request.getParameter("invoiceoption")) ;
-         System.out.println(invoiceoption + " " + "popo") ;
-         request.setAttribute("AllInvoice", InvoiceDataAccess.getAllByUserId(invoiceoption));
+        int invoiceoption = -1 ;
+        invoiceoption = Integer.parseInt(request.getParameter("invoiceoption")) ;
+        request.setAttribute("AllInvoice", InvoiceDataAccess.getAllByUserId(invoiceoption));
         RequestDispatcher rd = request.getRequestDispatcher("/invoice/AllInvoice.jsp") ;
         rd.forward(request, response); 
     }

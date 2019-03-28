@@ -27,21 +27,34 @@ public class InvoiceDataAccess {
     public int addInvoice(Invoice i){
         
         try {
-                String sql = "insert into invoice (invoice_detail, user_id) values (?, ?)";
+                String sql = "insert into invoice (invoice_detail, user_id, customerName, totalPrice, foodItemArray) values (?, ?, ?, ?, ?)";
                 PreparedStatement pst ;
-                pst = DBConnect.getPreparedStatement(sql);
-                pst.setString(1, i.getInvoice_detail());
-                pst.setInt(2, i.getUser_id());
-                pst.executeUpdate();
-                    JSONArray jsonArray = new JSONArray(i.getInvoice_detail());
+                JSONArray jsonArray = new JSONArray(i.getInvoice_detail());
+                String fooditemList = "" ;
+                Double totalPrice = 0.0 ;
+                      
                     for(int j=0;j<jsonArray.length();j++)
                     {
                         JSONObject jsonObject = jsonArray.getJSONObject(j);
-                        FoodDataAccess fd = new FoodDataAccess() ;
-                        int id = Integer.parseInt(jsonObject.optString("id")) ;
-                        int quantity = Integer.parseInt(jsonObject.optString("quantity")) ;
-                        fd.updateFoodItemRecord(id, quantity);
+                        fooditemList += jsonObject.optString("fooditem") + "," ;
+                        totalPrice += Double.parseDouble(jsonObject.optString("totalprice")) ;
+                        
                     }
+                pst = DBConnect.getPreparedStatement(sql);
+                pst.setString(1, i.getInvoice_detail());
+                pst.setInt(2, i.getUser_id());
+                pst.setString(3, i.getCustomerName());
+                pst.setDouble(4,totalPrice);
+                pst.setString(5, fooditemList);
+                pst.executeUpdate();
+                for(int j=0;j<jsonArray.length();j++)
+                {
+                    JSONObject jsonObject = jsonArray.getJSONObject(j);
+                    FoodDataAccess fd = new FoodDataAccess() ;
+                    int id = Integer.parseInt(jsonObject.optString("id")) ;
+                    int quantity = Integer.parseInt(jsonObject.optString("quantity")) ;
+                    fd.updateFoodItemRecord(id, quantity);
+                }
              } catch (SQLException | ClassNotFoundException | JSONException ex) {
             Logger.getLogger(FoodDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,14 +64,14 @@ public class InvoiceDataAccess {
     public static List<Invoice> getAllByUserId(int id){
         List<Invoice> ls = new LinkedList<>() ;
         try {
-            String sql = "select * from invoice" ;
+            String sql = "select invoice.id, invoice.invoice_detail, invoice.user_id, invoice.date_created, users.id, users.fname, users.lname, users.mname, invoice.customerName, invoice.totalPrice, invoice.foodItemArray from invoice join users on invoice.user_id = users.id " ;
             if (id > 0){
-                sql= "select * from invoice where user_id = " + id ;
+                sql+= " where invoice.user_id = " + id ;
             }
             ResultSet rs = DBConnect.getPreparedStatement(sql).executeQuery() ;
             int i = 0 ;
             while(rs.next()){
-                Invoice inv = new Invoice(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDate(4)) ;
+                Invoice inv = new Invoice(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDate(4), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getDouble(10), rs.getString(11)) ;
                 ls.add(inv) ;
             }
         } catch (ClassNotFoundException | SQLException ex) {

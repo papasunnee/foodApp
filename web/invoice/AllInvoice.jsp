@@ -38,8 +38,10 @@
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope="col">Invoice Detail</th>
-            <th scope="col">User Name</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Purchase List</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">Staff Name</th>
             <th scope="col">Invoice Date</th>
             <th scope="col">View</th>
           </tr>
@@ -48,8 +50,10 @@
             <c:forEach items="${AllInvoice}" var="i">
                 <tr>
                 <th scope="row">${i.id}</th>
-                <td>${i.invoice_detail}</td>
-                <td>${i.user_id}</td>
+                <th scope="row">${i.customerName}</th>
+                <td>${i.foodItemArray}</td>
+                <td>${i.totalPrice}</td>
+                <td>${i.fname} ${i.lname} ${i.mname}</td>
                 <td>${i.date_created}</td>
                 <td><button class="btn btn-link viewInvoice" name="viewInvoice" onclick='displayInvoice(${i.invoice_detail})' id="${i.invoice_detail}">View</button> 
                     <!--| <a href="delete?id=${s.id}">Delete</a>-->
@@ -89,15 +93,23 @@
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script>
+        function getTotalPrice(invoice_detail){
+            var totalP = 0 ;
+            invoice_detail.map(function(invoice){
+                totalP = parseFloat(invoice.totalprice) + total ; 
+            });
+            return totalP;
+        }
         function displayInvoice(invoice_detail){
             var total = 0 ;
              var text = "<table  class='table table-hover small-text'>" ;
-                text += invoice_detail.map(function(invoice){
-                          total = parseFloat(invoice.totalprice) + total ;
-                          return "<tr><td>"+invoice.quantity+"</td><td>"+invoice.fooditem+"</td><td>"+invoice.price+"</td><td>"+invoice.totalprice+"</td></tr>" ;
-                    });
-                    text+= "<tr><td colspan='4' style='text-align:right'>Total : "+total+"</td></tr>" ;
-                    text += "</table>" ;
+             text += "<tr class='tr-header'><th>Food Item Name</th><th>Quantity</th><th>Price</th><th>Total Cost</th></tr>" ;
+             invoice_detail.map(function(invoice){
+                total = parseFloat(invoice.totalprice) + total ;
+                text +=  "<tr><td>"+invoice.fooditem+"</td><td>"+invoice.quantity+"</td><td>"+invoice.price+"</td><td>"+invoice.totalprice+"</td></tr>" ;
+              });
+            text+= "<tr><td colspan='4' style='text-align:right'>Total : "+total+"</td></tr>" ;
+            text += "</table>" ;
             $(".invoiceContent").html(text) ;
             $("#exampleModal").modal("show") ;
             console.log(invoice_detail) ;

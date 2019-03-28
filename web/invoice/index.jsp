@@ -48,9 +48,8 @@
           </sql:query>
          <form name="invoice_form" class="form-inline" action="AllInvoice" method="post">
              <input type="hidden" name="currentUserId" value="<%= session.getAttribute("user_id") %>" />
-             
-              <label for="invoiceoption" class="mr-sm-2">Select Invoice to View</label>
-              <select name="invoiceoption" class="form-control mb-2 mr-sm-2">
+             <label for="invoiceoption" class="mr-sm-2">Select Invoice to View</label>
+             <select name="invoiceoption" class="form-control mb-2 mr-sm-2">
                  <%
                     if((int)session.getAttribute("user_role_id") < 2){
                  %>
@@ -70,10 +69,20 @@
             
             <button type="submit" class="btn btn-success mb-2">View Invoices</button>
         </form>
-      <form name="create_supply" action="${pageContext.request.contextPath}/supply/ManageAddInvoice.jsp" method="get">
+      <form class="mt-5" name="create_supply" action="${pageContext.request.contextPath}/supply/ManageAddInvoice.jsp" method="get">
         <sql:query dataSource="${ds}" var="result">
             SELECT * from fooditem;
         </sql:query>
+        <div class="row">
+            <div class="form-group col-md-6">
+               <label>Customer Name</label>
+               <input type="text" name="customerName" id="customerName" class="form-control" />
+           </div>
+<!--            <div class="form-group col-md-6">
+               <label>Customer Phone</label>
+               <input type="text" class="form-control" name="customerPhone" />
+           </div>-->
+        </div>
         <table  class="table table-hover small-text" id="tb">
             <tr class="tr-header">
                 <th>Food Item Name</th>
@@ -143,7 +152,7 @@ $(function(){
                     var text = "<table  class='table table-hover small-text'>" ;
                     text += sales.map(function(sale){
                               total = parseFloat(sale.totalprice) + total ;
-                              return "<tr><td>"+sale.quantity+"</td><td>"+sale.fooditem+"</td><td>"+sale.price+"</td><td>"+sale.totalprice+"</td></tr>" ;
+                              return "<tr><td>"+sale.fooditem+"</td><td>"+sale.quantity+"</td><td>"+sale.price+"</td><td>"+sale.totalprice+"</td></tr>" ;
                         });
                         text+= "<tr><td colspan='4' style='text-align:right'>Total : "+total+"</td></tr>" ;
                         text += "</table>" ;
@@ -156,14 +165,24 @@ $(function(){
      });
      
       $('#createInvoice').on('click', function() {
+          var cName = document.getElementById("customerName").value ;
           if(sales.length > 0){
-           $.post("${pageContext.request.contextPath}/invoice/ManageAddInvoice.jsp",{invoice_detail : JSON.stringify(sales)} ,function(data, status){
-            sales = [] ;
-            if(status == "success"){ 
-                alert("Invoice Successfully Created") ;
-                location.href = "${pageContext.request.contextPath}/invoice/index.jsp" ;
-            }
-          });
+              if(cName.trim() === "" || cName.trim() === null){
+                document.getElementById("customerName").value = "" ;
+                alert("Fill Customers Details") ;
+              }
+              else{
+                 $.post("${pageContext.request.contextPath}/invoice/ManageAddInvoice.jsp",{invoice_detail : JSON.stringify(sales), customerName : cName} ,function(data, status){
+                 if(status == "success"){ 
+                     alert("Invoice Successfully Created") ;
+                     location.href = "${pageContext.request.contextPath}/invoice/index.jsp" ;
+                 }
+                 else
+                 {
+                     alert("data") ;
+                 }
+               });
+              }
         } 
         else{
             alert('Add an item to the list') ;
@@ -189,7 +208,7 @@ $(function(){
                 $("input#totalprice").val(0) ;
                 $("input#quantity").val(0) ;
             }
-            else if($(this).val() > quantity){
+           else if(parseInt($(this).val()) > quantity){
                 alert("Product Quantity Insufficient") ;
                 $("input#totalprice").val(0) ;
                 $("input#quantity").val(null) ;
@@ -210,7 +229,7 @@ $(function(){
                 $("input#totalprice").val(0) ;
                 $("input#quantity").val(0) ;
             }
-            else if($(this).val() > quantity){
+            else if(parseInt($(this).val()) > quantity){
                 alert("Product Quantity Insufficient") ;
                 $("input#totalprice").val(0) ;
                 $("input#quantity").val(null) ;

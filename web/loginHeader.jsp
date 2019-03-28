@@ -16,7 +16,7 @@
               <a class="nav-link" href="${pageContext.request.contextPath}/fooditem">Food Items <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="${pageContext.request.contextPath}/invoice">Sales</a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/invoice">Sales/Invoice</a>
             </li>
             <%
                 if((int)session.getAttribute("user_role_id") < 2){

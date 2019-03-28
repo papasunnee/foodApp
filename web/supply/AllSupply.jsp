@@ -31,7 +31,7 @@
 
     <!-- Begin page content -->
     <main role="main" class="container">
-      <h1 class="mt-5">List of Created Food Item</h1>
+      <h1 class="mt-5">List of Supplies</h1>
       <a href="index.jsp" name="add_new_supply" class="mt-3 mb-3 btn btn-success">Add New Supply</a>
       <table class="table table-hover">
         <thead>
@@ -55,8 +55,8 @@
                 <td>${s.price}</td>
                 <td>${s.supplieraddress}</td>
                 <td><a href="edit?id=${s.id}">Edit</a> 
-                    | 
-                <a href="delete?id=${s.id}">Delete</a>
+<!--                    | 
+                <a href="delete?id=${s.id}">Delete</a>-->
                 </td>
 
             </tr>

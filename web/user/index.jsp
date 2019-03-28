@@ -24,7 +24,6 @@
       <jsp:include page="/loginHeader.jsp"/>
       <%
       if(session.getAttribute("username") == null){
-        
             response.sendRedirect(request.getContextPath());
         }   
       %>
