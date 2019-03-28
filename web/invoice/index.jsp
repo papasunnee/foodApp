@@ -47,14 +47,22 @@
                 SELECT * from users;
           </sql:query>
          <form class="form-inline" action="${pageContext.request.contextPath}/invoice/AllInvoice" method="post">
-            <label for="invoiceoption" class="mr-sm-2">Select Invoice to View</label>
-            <select class="form-control mb-2 mr-sm-2">
+             <input type="hidden" value="<%= session.getAttribute("user_id") %>" />
+              <%
+                if((int)session.getAttribute("user_role_id") < 2){
+              %>
+              <label for="invoiceoption" class="mr-sm-2">Select Invoice to View</label>
+              <select class="form-control mb-2 mr-sm-2">
                 <option value="-1">All</option>
+                
                 <c:forEach var="row" items="${myresult.rows}">
                     <option value='<c:out value="${row.id}"/>' > <c:out value="${row.fname} ${row.lname}"/> </option>
                 </c:forEach>
-            </select>
-            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+              </select>
+            <%
+               } 
+            %>
+            <button type="submit" class="btn btn-success mb-2">View Invoices</button>
         </form>
       <form name="create_supply" action="${pageContext.request.contextPath}/supply/ManageAddInvoice.jsp" method="get">
         <sql:query dataSource="${ds}" var="result">

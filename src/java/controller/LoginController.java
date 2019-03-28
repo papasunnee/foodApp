@@ -61,6 +61,7 @@ public class LoginController extends HttpServlet {
                       user.setId(rs.getInt("id"));
                       HttpSession session = request.getSession();	    
                       session.setAttribute("currentSessionUser",user); 
+                      session.setAttribute("user_id",user.getId()); 
                       session.setAttribute("username",username.toUpperCase()); 
                       session.setAttribute("fname",user.getFname()); 
                       String role[] = {"","Admin", "Manager","Staff"} ;
