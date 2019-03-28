@@ -51,8 +51,9 @@
                 <td>${i.invoice_detail}</td>
                 <td>${i.user_id}</td>
                 <td>${i.date_created}</td>
-                <td><a href="viewInvoice?id=${i.id}">View</a> | 
-                <a href="delete?id=${s.id}">Delete</a></td>
+                <td><button class="btn btn-link viewInvoice" name="viewInvoice" onclick='displayInvoice(${i.invoice_detail})' id="${i.invoice_detail}">View</button> 
+                    <!--| <a href="delete?id=${s.id}">Delete</a>-->
+                </td>
 
             </tr>
             </c:forEach>
@@ -60,11 +61,25 @@
       </table>
     </main>
 
-    <footer class="footer">
-      <div class="container">
-        <span class="text-muted">Olufunmilola Oroniran</span>
+    <jsp:include page="/footer.jsp" />
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Invoice Summary</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class="invoiceContent"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
       </div>
-    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -73,5 +88,37 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script>
+        function displayInvoice(invoice_detail){
+            var total = 0 ;
+             var text = "<table  class='table table-hover small-text'>" ;
+                text += invoice_detail.map(function(invoice){
+                          total = parseFloat(invoice.totalprice) + total ;
+                          return "<tr><td>"+invoice.quantity+"</td><td>"+invoice.fooditem+"</td><td>"+invoice.price+"</td><td>"+invoice.totalprice+"</td></tr>" ;
+                    });
+                    text+= "<tr><td colspan='4' style='text-align:right'>Total : "+total+"</td></tr>" ;
+                    text += "</table>" ;
+            $(".invoiceContent").html(text) ;
+            $("#exampleModal").modal("show") ;
+            console.log(invoice_detail) ;
+        }
+        $(document).ready(function(){
+           
+            if(modal === "e4cba4de95045a6745685f7ffd4abe1f"){
+                modal = "clear" ;
+                $(".invoiceContent").html("Application Requires Unique Email") ;
+                $("#exampleModal").modal("show") ;
+            }
+            
+            $("#exampleModal").on("hidden.bs.modal", function(){
+                console.log("clear") ;
+                if(modal === "clear"){
+                 location.href = contextPath + "/user" ;   
+                }
+            }) ; 
+        });
+
+        
+    </script>
   </body>
 </html>
